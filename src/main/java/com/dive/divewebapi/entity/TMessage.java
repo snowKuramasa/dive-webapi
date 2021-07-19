@@ -82,7 +82,7 @@ public class TMessage {
   //外部のテーブルとキーを指定
   @JoinColumn (
     //カラム名
-    name ="sender_id",
+    name ="receiver_id",
     //参照先カラム名
     referencedColumnName ="user_id",
     nullable = false

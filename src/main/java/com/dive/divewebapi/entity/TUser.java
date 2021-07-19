@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ManyToAny;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,7 +39,6 @@ public class TUser {
    * @PrimaryKey
    */
   @Id
-  @ManyToOne
   @GeneratedValue
   @Column(
     name = "user_id",
