@@ -77,17 +77,17 @@ public class TMessage {
    * Message received user ID.
    * @ForeigunKey
    */
-  //リレーションのために定義
-  // @OneToMany
-  // //外部のテーブルとキーを指定
-  // @JoinColumn (
-  //   //カラム名
-  //   name ="sender_id",
-  //   //参照先カラム名
-  //   referencedColumnName ="user_id",
-  //   nullable = false
-  // )
-  // private Integer receiver_id;
+  // リレーションのために定義
+  @OneToMany
+  //外部のテーブルとキーを指定
+  @JoinColumn (
+    //カラム名
+    name ="sender_id",
+    //参照先カラム名
+    referencedColumnName ="user_id",
+    nullable = false
+  )
+  private Integer receiver_id;
 
   // endregion receiver_id column
 
@@ -157,6 +157,6 @@ public class TMessage {
   @OneToMany(mappedBy = "user_message_favorite_id", cascade = CascadeType.ALL)
   private Set<TFavorite> t_favorities;
 
-  @OneToMany(mappedBy = "user_message_favorite_id", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user_message_already_read_id", cascade = CascadeType.ALL)
   private Set<TAlreadyRead> t_already_read;
 }
