@@ -2,6 +2,8 @@ package com.dive.divewebapi.entity;
 
 import java.sql.Date;
 
+import javax.persistence.AssociationOverride;
+import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.dive.divewebapi.entity.id.UserFollowId;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,74 +25,39 @@ import lombok.Setter;
 
 
 /**
- * 中間テーブルであり、ユーザーがフォローした人(follow_id)、ユーザーをフォローする人(follower_id)
- * のリレーション。
- * 複合主キーであり、組み合わせが一意であること
+ * 中間テーブルであり、ユーザー、メッセージテーブルとリレーションする。
+ * 複合主キーであり、組み合わせが一意であること。
 */
 
 // region common JPA annotations
 @Getter
 @Setter
 @Entity
-@Table(name="t_follow")
+@Table(name="t_favorite")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 // Defined to avoid duplication
 @EqualsAndHashCode
 
+@AssociationOverrides({
+  @AssociationOverride(name="user_message_favorite_id.user", joinColumns=@JoinColumn(name="id")),
+  @AssociationOverride(name="user_message_favorite_id.message", joinColumns=@JoinColumn(name="id"))
+})
 // endregion common JPA annotations
 
 public class TFollow {
 
-  // region follow_id column
+  // region user_follow_id column
   /**
   * Favorite table composite primary key
   */
   //リレーションのために定義
-  @ManyToOne
   //外部のテーブルとキーを指定
-  @JoinTable(
-    //参照先テーブル名
-    name="t_user",
-    joinColumns = {
-      @JoinColumn (
-        //カラム名
-        name ="follow_id",
-        //参照先カラム名
-        referencedColumnName ="id",
-        nullable = false
-      )
-    }
-  )
   @Id
-  private Integer follow_id;
+  private UserFollowId user_follow_id;
 
-  // endregion follow_id column
-
-  // region follower_id column
-  /**
-  * Favorite table composite primary key
-  */
-  @ManyToOne
-  //外部のテーブルとキーを指定
-  @JoinTable(
-    //参照先テーブル名
-    name="t_user",
-    joinColumns = {
-      @JoinColumn (
-        //カラム名
-        name ="follower_id",
-        //参照先カラム名
-        referencedColumnName ="id",
-        nullable = false
-      )
-    }
-  )
-  @Id
-  private Integer follower_id;
-
-  // endregion follower_id column
+  // endregion user_follow_id column
 
   // region create_time column
   /**

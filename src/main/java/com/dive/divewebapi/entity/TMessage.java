@@ -1,14 +1,15 @@
 package com.dive.divewebapi.entity;
 
 import java.sql.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -40,10 +41,10 @@ public class TMessage {
 	@Setter
   @GeneratedValue
   @Column(
-    name = "id",
+    name = "message_id",
     nullable = false
   )
-  private Integer id;
+  private Integer message_id;
 
   // endregion id column
 
@@ -55,20 +56,15 @@ public class TMessage {
    * @ForeigunKey
    */
   //リレーションのために定義
-  @ManyToOne
+  @OneToMany
   //外部のテーブルとキーを指定
-  @JoinTable(
-    //参照先テーブル名
-    name="t_user",
-    joinColumns = {
-      @JoinColumn (
-        //カラム名
-        name ="sender_id",
-        //参照先カラム名
-        referencedColumnName ="id",
-        nullable = false
-      )
-    }
+
+  @JoinColumn (
+    //カラム名
+    name ="sender_id",
+    //参照先カラム名
+    referencedColumnName ="user_id",
+    nullable = false
   )
   private Integer sender_id;
 
@@ -82,22 +78,16 @@ public class TMessage {
    * @ForeigunKey
    */
   //リレーションのために定義
-  @ManyToOne
-  //外部のテーブルとキーを指定
-  @JoinTable(
-    //参照先テーブル名
-    name="t_user",
-    joinColumns = {
-      @JoinColumn (
-        //カラム名
-        name ="receiver_id",
-        //参照先カラム名
-        referencedColumnName ="id",
-        nullable = true
-      )
-    }
-  )
-  private Integer receiver_id;
+  // @OneToMany
+  // //外部のテーブルとキーを指定
+  // @JoinColumn (
+  //   //カラム名
+  //   name ="sender_id",
+  //   //参照先カラム名
+  //   referencedColumnName ="user_id",
+  //   nullable = false
+  // )
+  // private Integer receiver_id;
 
   // endregion receiver_id column
 
@@ -123,20 +113,14 @@ public class TMessage {
    * @ForeigunKey
    */
   //リレーションのために定義
-  @ManyToOne
+  @OneToMany
   //外部のテーブルとキーを指定
-  @JoinTable(
-    //参照先テーブル名
-    name="t_room",
-    joinColumns = {
-      @JoinColumn (
-        //カラム名
-        name ="room_id",
-        //参照先カラム名
-        referencedColumnName ="id",
-        nullable = false
-      )
-    }
+  @JoinColumn (
+    //カラム名
+    name ="room_id",
+    //参照先カラム名
+    referencedColumnName ="room_id",
+    nullable = false
   )
   private Integer room_id;
 
@@ -169,4 +153,10 @@ public class TMessage {
   private Date modify_time;
 
   // endregion modify_time column
+
+  @OneToMany(mappedBy = "user_message_favorite_id.user", cascade = CascadeType.ALL)
+  private Set<TFavorite> t_favorities;
+
+  @OneToMany(mappedBy = "user_message_favorite_id.user", cascade = CascadeType.ALL)
+  private Set<TAlreadyRead> t_already_read;
 }

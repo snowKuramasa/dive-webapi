@@ -1,16 +1,20 @@
 package com.dive.divewebapi.entity;
 
 import java.sql.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ManyToAny;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,12 +40,13 @@ public class TUser {
    * @PrimaryKey
    */
   @Id
+  @ManyToOne
   @GeneratedValue
   @Column(
-    name = "id",
+    name = "user_id",
     nullable = false
   )
-  private Integer id;
+  private Integer user_id;
 
   // endregion id column
 
@@ -137,18 +142,12 @@ public class TUser {
    */
   @OneToOne
   //外部のテーブルとキーを指定
-  @JoinTable(
-    //参照先テーブル名
-    name="t_image",
-    joinColumns = {
-      @JoinColumn (
-        //カラム名
-        name ="icon_id",
-        //参照先カラム名
-        referencedColumnName ="id",
-        nullable = true
-      )
-    }
+  @JoinColumn (
+    //カラム名
+    name ="icon_id",
+    //参照先カラム名
+    referencedColumnName ="image_id",
+    nullable = false
   )
   private Integer icon_id;
 
@@ -195,4 +194,16 @@ public class TUser {
   private Date modify_time;
 
   // endregion modify_time column
+
+  @OneToMany(mappedBy = "user_message_favorite_id.user", cascade = CascadeType.ALL)
+    private Set<TFavorite> t_favorities;
+
+  @OneToMany(mappedBy = "user_follow_id.user", cascade = CascadeType.ALL)
+    private Set<TFollow> t_follows;
+
+  @OneToMany(mappedBy = "user_message_already_read_id.user", cascade = CascadeType.ALL)
+  private Set<TAlreadyRead> t_already_read;
+
+  @OneToMany(mappedBy = "user_room_relation_id.user", cascade = CascadeType.ALL)
+  private Set<TUserRoomRelation> t_user_room_relations;
 }

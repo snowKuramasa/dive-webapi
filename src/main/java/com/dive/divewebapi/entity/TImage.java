@@ -35,10 +35,10 @@ public class TImage {
   @Id
   @GeneratedValue
   @Column(
-    name = "id",
+    name = "image_id",
     nullable = false
   )
-  private Integer id;
+  private Integer image_id;
 
   // endregion id column
 

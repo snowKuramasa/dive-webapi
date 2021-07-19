@@ -2,6 +2,8 @@ package com.dive.divewebapi.entity;
 
 import java.sql.Date;
 
+import javax.persistence.AssociationOverride;
+import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.dive.divewebapi.entity.id.UserMessageFavoriteId;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,58 +40,24 @@ import lombok.Setter;
 // Defined to avoid duplication
 @EqualsAndHashCode
 
+@AssociationOverrides({
+  @AssociationOverride(name="user_message_favorite_id.user", joinColumns=@JoinColumn(name="id")),
+  @AssociationOverride(name="user_message_favorite_id.message", joinColumns=@JoinColumn(name="id"))
+})
 // endregion common JPA annotations
 
 public class TFavorite {
 
-  // region user_id column
+  // region user_message_favorite_id column
   /**
   * Favorite table composite primary key
   */
   //リレーションのために定義
-  @ManyToOne
   //外部のテーブルとキーを指定
-  @JoinTable(
-    //参照先テーブル名
-    name="t_user",
-    joinColumns = {
-      @JoinColumn (
-        //カラム名
-        name ="user_id",
-        //参照先カラム名
-        referencedColumnName ="id",
-        nullable = false
-      )
-    }
-  )
   @Id
-  private Integer user_id;
+  private UserMessageFavoriteId user_message_favorite_id;
 
-  // endregion user_id column
-
-  // region message_id column
-  /**
-  * Favorite table composite primary key
-  */
-  @ManyToOne
-  //外部のテーブルとキーを指定
-  @JoinTable(
-    //参照先テーブル名
-    name="t_message",
-    joinColumns = {
-      @JoinColumn (
-        //カラム名
-        name ="message_id",
-        //参照先カラム名
-        referencedColumnName ="id",
-        nullable = false
-      )
-    }
-  )
-  @Id
-  private Integer message_id;
-
-  // endregion message_id column
+  // endregion user_message_favorite_id column
 
   // region create_time column
   /**

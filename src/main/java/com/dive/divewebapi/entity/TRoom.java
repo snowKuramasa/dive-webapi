@@ -1,13 +1,16 @@
 package com.dive.divewebapi.entity;
 
 import java.sql.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -39,10 +42,10 @@ public class TRoom {
   @Id
   @GeneratedValue
   @Column(
-    name = "id",
+    name = "room_id",
     nullable = false
   )
-  private Integer id;
+  private Integer room_id;
 
   // endregion id column
 
@@ -53,18 +56,12 @@ public class TRoom {
    */
   @OneToOne
   //外部のテーブルとキーを指定
-  @JoinTable(
-    //参照先テーブル名
-    name="t_image",
-    joinColumns = {
-      @JoinColumn (
-        //カラム名
-        name ="thumbnail_id",
-        //参照先カラム名
-        referencedColumnName ="id",
-        nullable = false
-      )
-    }
+  @JoinColumn (
+    //カラム名
+    name ="thumbnail_id",
+    //参照先カラム名
+    referencedColumnName ="image_id",
+    nullable = false
   )
   private Integer thumbnail_id;
 
@@ -77,19 +74,12 @@ public class TRoom {
    * @ForeigunKey
    */
   @ManyToOne
-  //外部のテーブルとキーを指定
-  @JoinTable(
-    //参照先テーブル名
-    name="t_user",
-    joinColumns = {
-      @JoinColumn (
-        //カラム名
-        name ="room_creater_id",
-        //参照先カラム名
-        referencedColumnName ="id",
-        nullable = false
-      )
-    }
+  @JoinColumn (
+    //カラム名
+    name ="sender_id",
+    //参照先カラム名
+    referencedColumnName ="user_id",
+    nullable = false
   )
   private Integer room_creater_id;
 
@@ -162,4 +152,7 @@ public class TRoom {
   private Date modify_time;
 
   // endregion modify_time column
+
+  @OneToMany(mappedBy = "user_room_relation_id.user", cascade = CascadeType.ALL)
+  private Set<TUserRoomRelation> t_user_room_relations;
 }
