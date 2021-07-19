@@ -195,15 +195,15 @@ public class TUser {
 
   // endregion modify_time column
 
-  @OneToMany(mappedBy = "user_message_favorite_id.user", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user_message_favorite_id", cascade = CascadeType.ALL)
     private Set<TFavorite> t_favorities;
 
-  @OneToMany(mappedBy = "user_follow_id.user", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user_follow_id", cascade = CascadeType.ALL)
     private Set<TFollow> t_follows;
 
-  @OneToMany(mappedBy = "user_message_already_read_id.user", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user_message_already_read_id", cascade = CascadeType.ALL)
   private Set<TAlreadyRead> t_already_read;
 
-  @OneToMany(mappedBy = "user_room_relation_id.user", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user_room_relation_id", cascade = CascadeType.ALL)
   private Set<TUserRoomRelation> t_user_room_relations;
 }

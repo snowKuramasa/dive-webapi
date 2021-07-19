@@ -153,6 +153,6 @@ public class TRoom {
 
   // endregion modify_time column
 
-  @OneToMany(mappedBy = "user_room_relation_id.user", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "user_room_relation_id", cascade = CascadeType.ALL)
   private Set<TUserRoomRelation> t_user_room_relations;
 }
