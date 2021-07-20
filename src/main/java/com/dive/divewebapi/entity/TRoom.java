@@ -1,6 +1,7 @@
 package com.dive.divewebapi.entity;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -48,41 +49,41 @@ public class TRoom {
 
   // endregion id column
 
-  // region thumbnail_id column
-  /**
-   * thumbnail id.
-   * @ForeigunKey
-   */
-  @OneToOne
-  //外部のテーブルとキーを指定
-  @JoinColumn (
-    //カラム名
-    name ="thumbnail_id",
-    //参照先カラム名
-    referencedColumnName ="image_id",
-    nullable = false
-  )
-  private Integer thumbnail_id;
+  // // region thumbnail_id column
+  // /**
+  //  * thumbnail id.
+  //  * @ForeigunKey
+  //  */
+  // @OneToOne
+  // //外部のテーブルとキーを指定
+  // @JoinColumn (
+  //   //カラム名
+  //   name ="thumbnail_id",
+  //   //参照先カラム名
+  //   referencedColumnName ="image_id",
+  //   nullable = false
+  // )
+  // private Integer thumbnail_id;
 
-  // endregion thumbnail_id column
+  // // endregion thumbnail_id column
 
 
-  // region room_creater_id column
-  /**
-   * Room creator id.
-   * @ForeigunKey
-   */
-  @ManyToOne
-  @JoinColumn (
-    //カラム名
-    name ="sender_id",
-    //参照先カラム名
-    referencedColumnName ="user_id",
-    nullable = false
-  )
-  private Integer room_creater_id;
+  // // region room_creater_id column
+  // /**
+  //  * Room creator id.
+  //  * @ForeigunKey
+  //  */
+  // @ManyToOne
+  // @JoinColumn (
+  //   //カラム名
+  //   name ="sender_id",
+  //   //参照先カラム名
+  //   referencedColumnName ="user_id",
+  //   nullable = false
+  // )
+  // private Integer room_creater_id;
 
-  // endregion room_creater_id column
+  // // endregion room_creater_id column
 
 
   // region room_name column
@@ -151,6 +152,20 @@ public class TRoom {
   private Date modify_time;
 
   // endregion modify_time column
+
+  // region room_id column
+  /**
+   * Chat room ID
+   * ID of the room to which the Message belongs.
+   * @ForeigunKey
+   */
+  // //リレーションのために定義
+  @OneToMany(cascade = CascadeType.ALL)
+  // @OneToMany(cascade = CascadeType.ALL)
+  // @JoinColumn(name = "room_id", nullable = true)
+  private List<TMessage> room_message_list;
+
+  // endregion room_id column
 
   @OneToMany(mappedBy = "user_room_relation_id", cascade = CascadeType.ALL)
   private Set<TUserRoomRelation> t_user_room_relations;

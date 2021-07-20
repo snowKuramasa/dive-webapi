@@ -1,6 +1,7 @@
 package com.dive.divewebapi.entity;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -132,24 +133,24 @@ public class TUser {
   // endregion role column
 
 
-  // region icon_id column
-  /**
-   * User icon id.
-   * User icon image id.
-   * @ForeigunKey
-   */
-  @OneToOne
-  //外部のテーブルとキーを指定
-  @JoinColumn (
-    //カラム名
-    name ="icon_id",
-    //参照先カラム名
-    referencedColumnName ="image_id",
-    nullable = false
-  )
-  private Integer icon_id;
+  // // region icon_id column
+  // /**
+  //  * User icon id.
+  //  * User icon image id.
+  //  * @ForeigunKey
+  //  */
+  // @OneToOne
+  // //外部のテーブルとキーを指定
+  // @JoinColumn (
+  //   //カラム名
+  //   name ="icon_id",
+  //   //参照先カラム名
+  //   referencedColumnName ="image_id",
+  //   nullable = false
+  // )
+  // private Integer icon_id;
 
-  // endregion icon_id column
+  // // endregion icon_id column
 
 
   // region create_time column
@@ -192,6 +193,45 @@ public class TUser {
   private Date modify_time;
 
   // endregion modify_time column
+
+
+  // region sender_id column
+  /**
+   * Sender's ID.
+   * Message sended user ID.
+   * @ForeigunKey
+   */
+  //リレーションのために定義
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "sender_id", nullable = false)
+  private List<TMessage> sender_message_list;
+
+  // endregion sender_id column
+
+
+  // region receiver_id column
+  /**
+   * Receiver's ID.
+   * Message received user ID.
+   * @ForeigunKey
+   */
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "receiver_id", nullable = true)
+  private List<TMessage> receiver_message_list;
+
+  // endregion receiver_id column
+
+    // region room_creater_id column
+  /**
+   * Room creator id.
+   * @ForeigunKey
+   */
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "room_creater_id", nullable = true)
+  private List<TRoom> room_creater_list;
+
+  // endregion room_creater_id column
+
 
   @OneToMany(mappedBy = "user_message_favorite_id", cascade = CascadeType.ALL)
     private Set<TFavorite> t_favorities;

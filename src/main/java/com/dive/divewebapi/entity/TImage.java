@@ -1,11 +1,15 @@
 package com.dive.divewebapi.entity;
 
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -122,4 +126,27 @@ public class TImage {
   private Date modify_time;
 
   // endregion modify_time column
+
+  // region thumbnail_id column
+  /**
+   * thumbnail id.
+   * @ForeigunKey
+   */
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "thumbnail_id", nullable = true)
+  private List<TRoom> room_thumbnail_list;
+  // endregion thumbnail_id column
+
+
+  // region icon_id column
+  /**
+   * User icon id.
+   * User icon image id.
+   * @ForeigunKey
+   */
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinColumn(name = "icon_id", nullable = true)
+  private List<TUser> user_icon_list;
+
+  // endregion icon_id column
 }

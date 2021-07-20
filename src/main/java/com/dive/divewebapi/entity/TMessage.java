@@ -49,47 +49,47 @@ public class TMessage {
   // endregion id column
 
 
-  // region sender_id column
-  /**
-   * Sender's ID.
-   * Message sended user ID.
-   * @ForeigunKey
-   */
-  //リレーションのために定義
-  @OneToMany
-  //外部のテーブルとキーを指定
+  // // region sender_id column
+  // /**
+  //  * Sender's ID.
+  //  * Message sended user ID.
+  //  * @ForeigunKey
+  //  */
+  // //リレーションのために定義
+  // @OneToMany
+  // //外部のテーブルとキーを指定
 
-  @JoinColumn (
-    //カラム名
-    name ="sender_id",
-    //参照先カラム名
-    referencedColumnName ="user_id",
-    nullable = false
-  )
-  private Integer sender_id;
+  // @JoinColumn (
+  //   //カラム名
+  //   name ="sender_id",
+  //   //参照先カラム名
+  //   referencedColumnName ="user_id",
+  //   nullable = false
+  // )
+  // private Integer sender_id;
 
-  // endregion sender_id column
+  // // endregion sender_id column
 
 
-  // region receiver_id column
-  /**
-   * Receiver's ID.
-   * Message received user ID.
-   * @ForeigunKey
-   */
-  // リレーションのために定義
-  @OneToMany
-  //外部のテーブルとキーを指定
-  @JoinColumn (
-    //カラム名
-    name ="receiver_id",
-    //参照先カラム名
-    referencedColumnName ="user_id",
-    nullable = false
-  )
-  private Integer receiver_id;
+  // // region receiver_id column
+  // /**
+  //  * Receiver's ID.
+  //  * Message received user ID.
+  //  * @ForeigunKey
+  //  */
+  // // リレーションのために定義
+  // @OneToMany
+  // //外部のテーブルとキーを指定
+  // @JoinColumn (
+  //   //カラム名
+  //   name ="receiver_id",
+  //   //参照先カラム名
+  //   referencedColumnName ="user_id",
+  //   nullable = false
+  // )
+  // private Integer receiver_id;
 
-  // endregion receiver_id column
+  // // endregion receiver_id column
 
 
   // region message column
@@ -106,25 +106,25 @@ public class TMessage {
   // endregion message column
 
 
-  // region room_id column
-  /**
-   * Chat room ID
-   * ID of the room to which the Message belongs.
-   * @ForeigunKey
-   */
-  //リレーションのために定義
-  @OneToMany
-  //外部のテーブルとキーを指定
-  @JoinColumn (
-    //カラム名
-    name ="room_id",
-    //参照先カラム名
-    referencedColumnName ="room_id",
-    nullable = false
-  )
-  private Integer room_id;
+  // // region room_id column
+  // /**
+  //  * Chat room ID
+  //  * ID of the room to which the Message belongs.
+  //  * @ForeigunKey
+  //  */
+  // //リレーションのために定義
+  // @OneToMany
+  // //外部のテーブルとキーを指定
+  // @JoinColumn (
+  //   //カラム名
+  //   name ="room_id",
+  //   //参照先カラム名
+  //   referencedColumnName ="room_id",
+  //   nullable = false
+  // )
+  // private Integer room_id;
 
-  // endregion room_id column
+  // // endregion room_id column
 
 
   // region create_time column
