@@ -195,16 +195,28 @@ public class TUser {
   // endregion modify_time column
 
 
+ // region icon_id column
+  /**
+   * User icon id.
+   * User icon image id.
+   * @ForeigunKey
+   */
+  //リレーションのために定義
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "icon_id", nullable = true)
+  private TImage icon;
+
+  // endregion icon_id column
+
+
   // region sender_id column
   /**
    * Sender's ID.
    * Message sended user ID.
    * @ForeigunKey
    */
-  //リレーションのために定義
-  @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "sender_id", nullable = false)
-  private List<TMessage> sender_message_list;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender_user")
+  private List<TMessage> send_message_list;
 
   // endregion sender_id column
 
@@ -215,33 +227,31 @@ public class TUser {
    * Message received user ID.
    * @ForeigunKey
    */
-  @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "receiver_id", nullable = true)
-  private List<TMessage> receiver_message_list;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver_user")
+  private List<TMessage> receiv_message_list;
 
   // endregion receiver_id column
 
-    // region room_creater_id column
+  // region room_creater_id column
   /**
    * Room creator id.
    * @ForeigunKey
    */
-  @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "room_creater_id", nullable = true)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "room_creater")
   private List<TRoom> room_creater_list;
 
   // endregion room_creater_id column
 
 
   @OneToMany(mappedBy = "user_message_favorite_id", cascade = CascadeType.ALL)
-    private Set<TFavorite> t_favorities;
+    private Set<TFavorite> favorities;
 
   @OneToMany(mappedBy = "user_follow_id", cascade = CascadeType.ALL)
-    private Set<TFollow> t_follows;
+    private Set<TFollow> follows;
 
   @OneToMany(mappedBy = "user_message_already_read_id", cascade = CascadeType.ALL)
-  private Set<TAlreadyRead> t_already_read;
+  private Set<TAlreadyRead> already_read;
 
   @OneToMany(mappedBy = "user_room_relation_id", cascade = CascadeType.ALL)
-  private Set<TUserRoomRelation> t_user_room_relations;
+  private Set<TUserRoomRelation> user_room_relations;
 }

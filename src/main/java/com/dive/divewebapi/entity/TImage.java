@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -132,9 +133,8 @@ public class TImage {
    * thumbnail id.
    * @ForeigunKey
    */
-  @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "thumbnail_id", nullable = true)
-  private List<TRoom> room_thumbnail_list;
+  @OneToOne(mappedBy = "thumbnail")
+  private TRoom room;
   // endregion thumbnail_id column
 
 
@@ -144,9 +144,7 @@ public class TImage {
    * User icon image id.
    * @ForeigunKey
    */
-  @OneToMany(cascade = CascadeType.ALL)
-  @JoinColumn(name = "icon_id", nullable = true)
-  private List<TUser> user_icon_list;
-
+  @OneToOne(mappedBy = "icon")
+  private TUser user;
   // endregion icon_id column
 }

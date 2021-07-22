@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -154,9 +155,21 @@ public class TMessage {
 
   // endregion modify_time column
 
+  @ManyToOne
+  @JoinColumn(name="sender_id", nullable = false)
+  private TUser sender_user;
+
+  @ManyToOne
+  @JoinColumn(name="receiver_id", nullable = true)
+  private TUser receiver_user;
+
+  @ManyToOne
+  @JoinColumn(name="room_id" , nullable = false)
+  private TRoom room;
+
   @OneToMany(mappedBy = "user_message_favorite_id", cascade = CascadeType.ALL)
-  private Set<TFavorite> t_favorities;
+  private Set<TFavorite> favorities;
 
   @OneToMany(mappedBy = "user_message_already_read_id", cascade = CascadeType.ALL)
-  private Set<TAlreadyRead> t_already_read;
+  private Set<TAlreadyRead> already_read;
 }

@@ -55,6 +55,7 @@ public class TFavorite {
   //リレーションのために定義
   //外部のテーブルとキーを指定
   @Id
+  @Column(insertable = false, updatable = false)
   private UserMessageFavoriteId user_message_favorite_id;
 
   // endregion user_message_favorite_id column

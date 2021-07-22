@@ -54,36 +54,23 @@ public class TRoom {
   //  * thumbnail id.
   //  * @ForeigunKey
   //  */
-  // @OneToOne
-  // //外部のテーブルとキーを指定
-  // @JoinColumn (
-  //   //カラム名
-  //   name ="thumbnail_id",
-  //   //参照先カラム名
-  //   referencedColumnName ="image_id",
-  //   nullable = false
-  // )
-  // private Integer thumbnail_id;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "thumbnail_id", nullable = true)
+  private TImage thumbnail;
 
   // // endregion thumbnail_id column
 
 
-  // // region room_creater_id column
-  // /**
-  //  * Room creator id.
-  //  * @ForeigunKey
-  //  */
-  // @ManyToOne
-  // @JoinColumn (
-  //   //カラム名
-  //   name ="sender_id",
-  //   //参照先カラム名
-  //   referencedColumnName ="user_id",
-  //   nullable = false
-  // )
-  // private Integer room_creater_id;
+  // region room_creater_id column
+  /**
+   * Room creator id.
+   * @ForeigunKey
+   */
+  @ManyToOne
+  @JoinColumn(name="room_creater_id", nullable = false)
+  private TUser room_creater;
 
-  // // endregion room_creater_id column
+  // endregion room_creater_id column
 
 
   // region room_name column
@@ -160,7 +147,7 @@ public class TRoom {
    * @ForeigunKey
    */
   // //リレーションのために定義
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany( mappedBy = "room", cascade = CascadeType.ALL)
   // @OneToMany(cascade = CascadeType.ALL)
   // @JoinColumn(name = "room_id", nullable = true)
   private List<TMessage> room_message_list;
@@ -168,5 +155,5 @@ public class TRoom {
   // endregion room_id column
 
   @OneToMany(mappedBy = "user_room_relation_id", cascade = CascadeType.ALL)
-  private Set<TUserRoomRelation> t_user_room_relations;
+  private Set<TUserRoomRelation> user_room_relations;
 }
