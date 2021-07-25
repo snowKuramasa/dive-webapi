@@ -1,6 +1,7 @@
 package com.dive.divewebapi.entity;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +34,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TUser {
-
   // region id column
   /**
    * User ID.
@@ -45,7 +45,7 @@ public class TUser {
     name = "user_id",
     nullable = false
   )
-  private Integer user_id;
+  private Integer userId;
 
   // endregion id column
 
@@ -57,7 +57,7 @@ public class TUser {
     name = "user_mail",
     nullable = false
   )
-  private String user_mail;
+  private String userMail;
 
   // endregion user_mail column
 
@@ -70,7 +70,7 @@ public class TUser {
     name = "user_password",
     nullable = false
   )
-  private String user_password;
+  private String userPassword;
 
   // endregion user_password column
 
@@ -84,7 +84,7 @@ public class TUser {
     name = "user_name",
     nullable = false
   )
-  private String user_name;
+  private String userName;
 
   // endregion user_name column
 
@@ -98,7 +98,7 @@ public class TUser {
     name = "user_profile",
     nullable = true
   )
-  private String user_profile;
+  private String userProfile;
 
   // endregion user_profile column
 
@@ -133,26 +133,6 @@ public class TUser {
   // endregion role column
 
 
-  // // region icon_id column
-  // /**
-  //  * User icon id.
-  //  * User icon image id.
-  //  * @ForeigunKey
-  //  */
-  // @OneToOne
-  // //外部のテーブルとキーを指定
-  // @JoinColumn (
-  //   //カラム名
-  //   name ="icon_id",
-  //   //参照先カラム名
-  //   referencedColumnName ="image_id",
-  //   nullable = false
-  // )
-  // private Integer icon_id;
-
-  // // endregion icon_id column
-
-
   // region create_time column
   /**
    * Created date.
@@ -162,7 +142,7 @@ public class TUser {
     name = "create_time",
     nullable = false
   )
-  private Date create_time;
+  private Date createTime;
 
   // endregion create_time column
 
@@ -176,7 +156,7 @@ public class TUser {
     name = "last_login_time",
     nullable = false
   )
-  private Date last_login_time;
+  private Date lastLoginTime;
 
   // endregion last_login_time column
 
@@ -190,68 +170,36 @@ public class TUser {
     name = "modify_time",
     nullable = false
   )
-  private Date modify_time;
+  private Date modifyTime;
 
   // endregion modify_time column
 
 
- // region icon_id column
-  /**
-   * User icon id.
-   * User icon image id.
-   * @ForeigunKey
-   */
-  //リレーションのために定義
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "icon_id", nullable = true)
-  private TImage icon;
+  // // region sender_id column
+  // /**
+  //  * Sender's ID.
+  //  * Message sended user ID.
+  //  * @ForeigunKey
+  //  */
+  // @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderUser")
+  // private List<TMessage> sendMessageList;
 
-  // endregion icon_id column
+  // // endregion sender_id column
 
 
-  // region sender_id column
-  /**
-   * Sender's ID.
-   * Message sended user ID.
-   * @ForeigunKey
-   */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender_user")
-  private List<TMessage> send_message_list;
+  // // region receiver_id column
+  // /**
+  //  * Receiver's ID.
+  //  * Message received user ID.
+  //  * @ForeigunKey
+  //  */
+  // @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverUser")
+  // private List<TMessage> receiverMessageList;
 
-  // endregion sender_id column
-
-
-  // region receiver_id column
-  /**
-   * Receiver's ID.
-   * Message received user ID.
-   * @ForeigunKey
-   */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver_user")
-  private List<TMessage> receiv_message_list;
-
-  // endregion receiver_id column
-
-  // region room_creater_id column
-  /**
-   * Room creator id.
-   * @ForeigunKey
-   */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "room_creater")
-  private List<TRoom> room_creater_list;
-
-  // endregion room_creater_id column
+  // // endregion receiver_id column
 
 
-  @OneToMany(mappedBy = "user_message_favorite_id", cascade = CascadeType.ALL)
-    private Set<TFavorite> favorities;
+  @OneToMany(mappedBy = "userMessageFavoriteId.user", cascade = CascadeType.ALL)
+    private Set<TFavorite> favorites;
 
-  @OneToMany(mappedBy = "user_follow_id", cascade = CascadeType.ALL)
-    private Set<TFollow> follows;
-
-  @OneToMany(mappedBy = "user_message_already_read_id", cascade = CascadeType.ALL)
-  private Set<TAlreadyRead> already_read;
-
-  @OneToMany(mappedBy = "user_room_relation_id", cascade = CascadeType.ALL)
-  private Set<TUserRoomRelation> user_room_relations;
 }

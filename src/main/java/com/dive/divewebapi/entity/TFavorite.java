@@ -5,12 +5,14 @@ import java.sql.Date;
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.dive.divewebapi.entity.id.UserMessageFavoriteId;
 
@@ -41,12 +43,14 @@ import lombok.Setter;
 @EqualsAndHashCode
 
 @AssociationOverrides({
-  @AssociationOverride(name="user_message_favorite_id.user", joinColumns=@JoinColumn(name="id")),
-  @AssociationOverride(name="user_message_favorite_id.message", joinColumns=@JoinColumn(name="id"))
+  @AssociationOverride(name="userMessageFavoriteId.user", joinColumns=@JoinColumn(name="user_id")),
+  @AssociationOverride(name="userMessageFavoriteId.message", joinColumns=@JoinColumn(name="message_id"))
 })
 // endregion common JPA annotations
 
 public class TFavorite {
+
+  private UserMessageFavoriteId UserMessageFavoriteId = new UserMessageFavoriteId();
 
   // region user_message_favorite_id column
   /**
@@ -55,9 +59,31 @@ public class TFavorite {
   //リレーションのために定義
   //外部のテーブルとキーを指定
   @Id
-  @Column(insertable = false, updatable = false)
-  private UserMessageFavoriteId user_message_favorite_id;
+  public UserMessageFavoriteId getUserMessageFavoriteId() {
+      return UserMessageFavoriteId;
+  }
 
+  public void setUserMessageFavoriteId(UserMessageFavoriteId userMessageFavoriteId) {
+      this.UserMessageFavoriteId = userMessageFavoriteId;
+  }
+
+  @Transient
+  public TUser getUser() {
+      return getUserMessageFavoriteId().getUser();
+  }
+
+  public void setUser(TUser user) {
+    getUserMessageFavoriteId().setUser(user);
+  }
+
+  @Transient
+  public TMessage getMessage() {
+      return getUserMessageFavoriteId().getMessage();
+  }
+
+  public void setMessage(TMessage message) {
+    getUserMessageFavoriteId().setMessage(message);
+  }
   // endregion user_message_favorite_id column
 
   // region create_time column
@@ -65,7 +91,7 @@ public class TFavorite {
    * Created date.
    */
   @Column(nullable = false)
-  private Date create_time;
+  private Date createTime;
 
   // endregion create_time column
 
@@ -74,7 +100,7 @@ public class TFavorite {
    * Modify date.
    */
   @Column(nullable = false)
-  private Date modify_time;
+  private Date modifyTime;
 
   // endregion modify_time column
 }
