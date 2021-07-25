@@ -91,13 +91,13 @@ public class TMessage {
 
   // endregion modify_time column
 
-  // @ManyToOne
-  // @JoinColumn(name="sender_id", nullable = false)
-  // private TUser senderUser;
+  @ManyToOne
+  @JoinColumn(name="sender_id", nullable = false)
+  private TUser senderUser;
 
-  // @ManyToOne
-  // @JoinColumn(name="receiver_id", nullable = true)
-  // private TUser receiverUser;
+  @ManyToOne
+  @JoinColumn(name="receiver_id", nullable = true)
+  private TUser receiverUser;
 
 
   @OneToMany(mappedBy = "userMessageFavoriteId.message", cascade = CascadeType.ALL)

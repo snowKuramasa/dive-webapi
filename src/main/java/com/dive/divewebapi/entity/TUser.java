@@ -175,28 +175,28 @@ public class TUser {
   // endregion modify_time column
 
 
-  // // region sender_id column
-  // /**
-  //  * Sender's ID.
-  //  * Message sended user ID.
-  //  * @ForeigunKey
-  //  */
-  // @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderUser")
-  // private List<TMessage> sendMessageList;
+  // region sender_id column
+  /**
+   * Sender's ID.
+   * Message sended user ID.
+   * @ForeigunKey
+   */
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderUser")
+  private List<TMessage> sendMessageList;
 
-  // // endregion sender_id column
+  // endregion sender_id column
 
 
-  // // region receiver_id column
-  // /**
-  //  * Receiver's ID.
-  //  * Message received user ID.
-  //  * @ForeigunKey
-  //  */
-  // @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverUser")
-  // private List<TMessage> receiverMessageList;
+  // region receiver_id column
+  /**
+   * Receiver's ID.
+   * Message received user ID.
+   * @ForeigunKey
+   */
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverUser")
+  private List<TMessage> receiverMessageList;
 
-  // // endregion receiver_id column
+  // endregion receiver_id column
 
 
   @OneToMany(mappedBy = "userMessageFavoriteId.user", cascade = CascadeType.ALL)
