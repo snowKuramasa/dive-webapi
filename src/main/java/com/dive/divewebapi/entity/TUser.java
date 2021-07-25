@@ -34,7 +34,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TUser {
-  // region id column
+  // region id column---
   /**
    * User ID.
    * @PrimaryKey
@@ -47,9 +47,9 @@ public class TUser {
   )
   private Integer userId;
 
-  // endregion id column
+  // endregion id column---
 
-  // region mail column
+  // region mail column---
   /**
    * User user_mail.
    */
@@ -59,10 +59,9 @@ public class TUser {
   )
   private String userMail;
 
-  // endregion user_mail column
+  // endregion user_mail column---
 
-
-  // region user_password column
+  // region user_password column---
   /**
    * User password.
    */
@@ -72,10 +71,9 @@ public class TUser {
   )
   private String userPassword;
 
-  // endregion user_password column
+  // endregion user_password column---
 
-
-  // region user_name column
+  // region user_name column---
   /**
    * User name.
    * The name used in the app.
@@ -86,10 +84,9 @@ public class TUser {
   )
   private String userName;
 
-  // endregion user_name column
+  // endregion user_name column---
 
-
-  // region user_profile column
+  // region user_profile column---
   /**
    * User profile.
    * User profile statement.
@@ -100,10 +97,9 @@ public class TUser {
   )
   private String userProfile;
 
-  // endregion user_profile column
+  // endregion user_profile column---
 
-
-  // region deleted column
+  // region deleted column---
   /**
    * Deleted status.
    * User delete status.
@@ -115,10 +111,9 @@ public class TUser {
   )
   private int deleted;
 
-  // endregion deleted column
+  // endregion deleted column---
 
-
-  // region role column
+  // region role column---
   /**
    * User role.
    * Roletype
@@ -130,10 +125,9 @@ public class TUser {
   )
   private String role;
 
-  // endregion role column
+  // endregion role column---
 
-
-  // region create_time column
+  // region create_time column---
   /**
    * Created date.
    * User creation date.
@@ -144,10 +138,10 @@ public class TUser {
   )
   private Date createTime;
 
-  // endregion create_time column
+  // endregion create_time column---
 
 
-  // region last_login_time column
+  // region last_login_time column---
   /**
    * Created date.
    * User creation date.
@@ -158,10 +152,9 @@ public class TUser {
   )
   private Date lastLoginTime;
 
-  // endregion last_login_time column
+  // endregion last_login_time column---
 
-
-  // region modify_time column
+  // region modify_time column---
   /**
    * Modify date.
    * User update date.
@@ -172,10 +165,9 @@ public class TUser {
   )
   private Date modifyTime;
 
-  // endregion modify_time column
+  // endregion modify_time column---
 
-
-  // region sender_id column
+  // region sender_id column---
   /**
    * Sender's ID.
    * Message sended user ID.
@@ -184,10 +176,9 @@ public class TUser {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderUser")
   private List<TMessage> sendMessageList;
 
-  // endregion sender_id column
+  // endregion sender_id column---
 
-
-  // region receiver_id column
+  // region receiver_id column---
   /**
    * Receiver's ID.
    * Message received user ID.
@@ -196,10 +187,13 @@ public class TUser {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverUser")
   private List<TMessage> receiverMessageList;
 
-  // endregion receiver_id column
+  // endregion receiver_id column---
 
 
   @OneToMany(mappedBy = "userMessageFavoriteId.user", cascade = CascadeType.ALL)
     private Set<TFavorite> favorites;
+
+  @OneToMany(mappedBy = "userMessageAlreadyRead.user", cascade = CascadeType.ALL)
+    private Set<TAlreadyRead> alreadyReads;
 
 }

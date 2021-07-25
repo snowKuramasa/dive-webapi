@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.dive.divewebapi.entity.id.UserMessageAlreadyReadId;
 import com.dive.divewebapi.entity.id.UserMessageFavoriteId;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +24,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+
+
+/**
+ * 中間テーブルであり、ユーザー、メッセージテーブルとリレーションする。
+ * 複合主キーであり、組み合わせが一意であること。
+*/
 
 // region common JPA annotations
 @Getter
@@ -36,26 +44,26 @@ import lombok.Setter;
 @EqualsAndHashCode
 
 @AssociationOverrides({
-  @AssociationOverride(name="userMessageFavoriteId.user", joinColumns=@JoinColumn(name="user_id")),
-  @AssociationOverride(name="userMessageFavoriteId.message", joinColumns=@JoinColumn(name="message_id"))
+  @AssociationOverride(name="userMessageAlreadyReadId.user", joinColumns=@JoinColumn(name="user_id")),
+  @AssociationOverride(name="userMessageAlreadyReadId.message", joinColumns=@JoinColumn(name="message_id"))
 })
 // endregion common JPA annotations
 
-public class TFavorite {
+public class TAlreadyRead {
 
-  private UserMessageFavoriteId UserMessageFavoriteId = new UserMessageFavoriteId();
+  private UserMessageAlreadyReadId userMessageAlreadyReadId = new UserMessageAlreadyReadId();
 
-  // region user_message_favorite_id column---
+  // region user_message_already_read_id column---
   /**
   * Favorite table composite primary key
   */
   //リレーションのために定義
   //外部のテーブルとキーを指定
   @Id
-  public UserMessageFavoriteId getUserMessageFavoriteId() {
-      return UserMessageFavoriteId;
+  public UserMessageAlreadyReadId getUserMessageAlreadyReadId() {
+      return userMessageAlreadyReadId;
   }
-  // endregion user_message_favorite_id column---
+  // endregion user_message_already_read_id column---
 
   // region create_time column---
   /**
@@ -75,25 +83,26 @@ public class TFavorite {
 
   // endregion modify_time column---
 
-public void setUserMessageFavoriteId(UserMessageFavoriteId userMessageFavoriteId) {
-    this.UserMessageFavoriteId = userMessageFavoriteId;
-}
 
-@Transient
-public TUser getUser() {
-    return getUserMessageFavoriteId().getUser();
-}
+  public void setUserMessageAlreadyReadId(UserMessageAlreadyReadId userMessageAlreadyReadId) {
+      this.userMessageAlreadyReadId = userMessageAlreadyReadId;
+  }
 
-public void setUser(TUser user) {
-  getUserMessageFavoriteId().setUser(user);
-}
+  @Transient
+  public TUser getUser() {
+      return getUserMessageAlreadyReadId().getUser();
+  }
 
-@Transient
-public TMessage getMessage() {
-    return getUserMessageFavoriteId().getMessage();
-}
+  public void setUser(TUser user) {
+    getUserMessageAlreadyReadId().setUser(user);
+  }
 
-public void setMessage(TMessage message) {
-  getUserMessageFavoriteId().setMessage(message);
-}
+  @Transient
+  public TMessage getMessage() {
+      return getUserMessageAlreadyReadId().getMessage();
+  }
+
+  public void setMessage(TMessage message) {
+    getUserMessageAlreadyReadId().setMessage(message);
+  }
 }

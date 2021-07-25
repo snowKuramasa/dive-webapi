@@ -103,4 +103,7 @@ public class TMessage {
   @OneToMany(mappedBy = "userMessageFavoriteId.message", cascade = CascadeType.ALL)
     private Set<TFavorite> favorites;
 
+  @OneToMany(mappedBy = "userMessageAlreadyRead.message", cascade = CascadeType.ALL)
+    private Set<TAlreadyRead> alreadyReads;
+
 }
