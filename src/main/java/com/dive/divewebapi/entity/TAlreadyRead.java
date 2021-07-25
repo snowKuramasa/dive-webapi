@@ -36,7 +36,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="t_favorite")
+@Table(name="t_already_read")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -193,7 +193,7 @@ public class TUser {
   @OneToMany(mappedBy = "userMessageFavoriteId.user", cascade = CascadeType.ALL)
     private Set<TFavorite> favorites;
 
-  @OneToMany(mappedBy = "userMessageAlreadyRead.user", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "userMessageAlreadyReadId.user", cascade = CascadeType.ALL)
     private Set<TAlreadyRead> alreadyReads;
 
 }
