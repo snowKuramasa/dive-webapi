@@ -1,7 +1,6 @@
 package com.dive.divewebapi.entity;
 
 import java.sql.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,9 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -195,5 +191,11 @@ public class TUser {
 
   @OneToMany(mappedBy = "userMessageAlreadyReadId.user", cascade = CascadeType.ALL)
     private Set<TAlreadyRead> alreadyReads;
+
+  @OneToMany(mappedBy = "userUserFollowId.follow", cascade = CascadeType.ALL)
+    private Set<TFollow> follows;
+
+  @OneToMany(mappedBy = "userUserFollowId.follower", cascade = CascadeType.ALL)
+    private Set<TFollow> followers;
 
 }

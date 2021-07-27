@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.dive.divewebapi.entity.id.UserMessageAlreadyReadId;
+import com.dive.divewebapi.entity.id.UserUserFollowId;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,11 +22,12 @@ import lombok.Setter;
 
 
 
+
 // region common JPA annotations
 @Getter
 @Setter
 @Entity
-@Table(name="t_already_read")
+@Table(name="t_follow")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,26 +35,26 @@ import lombok.Setter;
 @EqualsAndHashCode
 
 @AssociationOverrides({
-  @AssociationOverride(name="userMessageAlreadyReadId.user", joinColumns=@JoinColumn(name="user_id")),
-  @AssociationOverride(name="userMessageAlreadyReadId.message", joinColumns=@JoinColumn(name="message_id"))
+  @AssociationOverride(name="userUserFollowId.follow", joinColumns=@JoinColumn(name="follow_id")),
+  @AssociationOverride(name="userUserFollowId.follower", joinColumns=@JoinColumn(name="follower_id"))
 })
 // endregion common JPA annotations
 
-public class TAlreadyRead {
+public class TFollow {
 
-  private UserMessageAlreadyReadId userMessageAlreadyReadId = new UserMessageAlreadyReadId();
+  private UserUserFollowId userUserFollowId = new UserUserFollowId();
 
-  // region user_message_already_read_id column---
+  // region user_user_follow_id column---
   /**
   * Favorite table composite primary key
   */
   //リレーションのために定義
   //外部のテーブルとキーを指定
   @Id
-  public UserMessageAlreadyReadId getUserMessageAlreadyReadId() {
-      return userMessageAlreadyReadId;
+  public UserUserFollowId getUserUserFollowId() {
+      return userUserFollowId;
   }
-  // endregion user_message_already_read_id column---
+  // endregion user_user_follow_id column---
 
   // region create_time column---
   /**
@@ -74,25 +75,25 @@ public class TAlreadyRead {
   // endregion modify_time column---
 
 
-  public void setUserMessageAlreadyReadId(UserMessageAlreadyReadId userMessageAlreadyReadId) {
-      this.userMessageAlreadyReadId = userMessageAlreadyReadId;
+  public void setUserUserFollowId(UserUserFollowId userUserFollowId) {
+      this.userUserFollowId = userUserFollowId;
   }
 
   @Transient
-  public TUser getUser() {
-      return getUserMessageAlreadyReadId().getUser();
+  public TUser getFollow() {
+      return getUserUserFollowId().getFollow();
   }
 
-  public void setUser(TUser user) {
-    getUserMessageAlreadyReadId().setUser(user);
+  public void setFollow(TUser follow) {
+    getUserUserFollowId().setFollow(follow);
   }
 
   @Transient
-  public TMessage getMessage() {
-      return getUserMessageAlreadyReadId().getMessage();
+  public TUser getFollower() {
+      return getUserUserFollowId().getFollower();
   }
 
-  public void setMessage(TMessage message) {
-    getUserMessageAlreadyReadId().setMessage(message);
+  public void setFollower(TUser follower) {
+    getUserUserFollowId().setFollower(follower);
   }
 }
