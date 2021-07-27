@@ -90,10 +90,16 @@ public class TMessage {
 
   // endregion modify_time column
 
+  /**
+   * user table foreigun key name-> name="sender_id"
+   */
   @ManyToOne
   @JoinColumn(name="sender_id", nullable = false)
   private TUser senderUser;
 
+  /**
+   * user table foreigun key name-> name="receiver_id"
+   */
   @ManyToOne
   @JoinColumn(name="receiver_id", nullable = true)
   private TUser receiverUser;

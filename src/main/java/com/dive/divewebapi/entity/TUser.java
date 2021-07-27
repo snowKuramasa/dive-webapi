@@ -185,6 +185,17 @@ public class TUser {
 
   // endregion receiver_id column---
 
+  // region room_creater_id column---
+  /**
+   * room creater.
+   * room creater ID.
+   * @ForeigunKey
+   */
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomCreater")
+  private List<TRoom> roomCreaterList;
+
+  // endregion room_creater_id column---
+
 
   @OneToMany(mappedBy = "userMessageFavoriteId.user", cascade = CascadeType.ALL)
     private Set<TFavorite> favorites;
