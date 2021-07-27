@@ -17,11 +17,31 @@ import lombok.Setter;
 @Getter
 @Setter
 @Embeddable
-@EqualsAndHashCode(exclude= {"follow_user", "follower_user"})
-public class UserFollowId implements Serializable  {
+@EqualsAndHashCode(exclude= {"follow", "follower"})
+public class UserUserFollowId implements Serializable  {
+
+
+  private TUser follow;
+  private TUser follower;
 
   @ManyToOne(cascade = CascadeType.ALL)
-  private TUser follow_user;
+  public TUser getFollow(){
+    return follow;
+  }
+
+  public void setFollow(TUser follow){
+    this.follow = follow;
+  }
+
+
   @ManyToOne(cascade = CascadeType.ALL)
-  private TUser follower_user;
+  public TUser getFollower(){
+    return follower;
+  }
+
+  public void setFollower(TUser follower){
+    this.follower = follower;
+  }
+
+
 }

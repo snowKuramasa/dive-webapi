@@ -21,8 +21,28 @@ import lombok.Setter;
 @EqualsAndHashCode(exclude= {"user", "message"})
 public class UserMessageAlreadyReadId implements Serializable  {
 
-  @ManyToOne(cascade = CascadeType.ALL)
+
   private TUser user;
-  @ManyToOne(cascade = CascadeType.ALL)
   private TMessage message;
+
+  @ManyToOne(cascade = CascadeType.ALL)
+  public TUser getUser(){
+    return user;
+  }
+
+  public void setUser(TUser user){
+    this.user = user;
+  }
+
+
+  @ManyToOne(cascade = CascadeType.ALL)
+  public TMessage getMessage(){
+    return message;
+  }
+
+  public void setMessage(TMessage message){
+    this.message = message;
+  }
+
+
 }

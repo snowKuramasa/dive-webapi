@@ -8,9 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.dive.divewebapi.entity.id.UserMessageFavoriteId;
 
@@ -21,13 +20,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-
-
-/**
- * 中間テーブルであり、ユーザー、メッセージテーブルとリレーションする。
- * 複合主キーであり、組み合わせが一意であること。
-*/
 
 // region common JPA annotations
 @Getter
@@ -41,40 +33,64 @@ import lombok.Setter;
 @EqualsAndHashCode
 
 @AssociationOverrides({
-  @AssociationOverride(name="user_message_favorite_id.user", joinColumns=@JoinColumn(name="id")),
-  @AssociationOverride(name="user_message_favorite_id.message", joinColumns=@JoinColumn(name="id"))
+  @AssociationOverride(name="userMessageFavoriteId.user", joinColumns=@JoinColumn(name="user_id")),
+  @AssociationOverride(name="userMessageFavoriteId.message", joinColumns=@JoinColumn(name="message_id"))
 })
 // endregion common JPA annotations
 
 public class TFavorite {
 
-  // region user_message_favorite_id column
+  private UserMessageFavoriteId UserMessageFavoriteId = new UserMessageFavoriteId();
+
+  // region user_message_favorite_id column---
   /**
   * Favorite table composite primary key
   */
   //リレーションのために定義
   //外部のテーブルとキーを指定
   @Id
-  @Column(insertable = false, updatable = false)
-  private UserMessageFavoriteId user_message_favorite_id;
+  public UserMessageFavoriteId getUserMessageFavoriteId() {
+      return UserMessageFavoriteId;
+  }
+  // endregion user_message_favorite_id column---
 
-  // endregion user_message_favorite_id column
-
-  // region create_time column
+  // region create_time column---
   /**
    * Created date.
    */
   @Column(nullable = false)
-  private Date create_time;
+  private Date createTime;
 
-  // endregion create_time column
+  // endregion create_time column---
 
-  // region modify_time column
+  // region modify_time column---
   /**
    * Modify date.
    */
   @Column(nullable = false)
-  private Date modify_time;
+  private Date modifyTime;
 
-  // endregion modify_time column
+  // endregion modify_time column---
+
+public void setUserMessageFavoriteId(UserMessageFavoriteId userMessageFavoriteId) {
+    this.UserMessageFavoriteId = userMessageFavoriteId;
+}
+
+@Transient
+public TUser getUser() {
+    return getUserMessageFavoriteId().getUser();
+}
+
+public void setUser(TUser user) {
+  getUserMessageFavoriteId().setUser(user);
+}
+
+@Transient
+public TMessage getMessage() {
+    return getUserMessageFavoriteId().getMessage();
+}
+
+public void setMessage(TMessage message) {
+  getUserMessageFavoriteId().setMessage(message);
+}
 }

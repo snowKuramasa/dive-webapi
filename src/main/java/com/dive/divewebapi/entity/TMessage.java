@@ -31,7 +31,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TMessage {
-
   // region id column
   /**
    * Message ID.
@@ -45,52 +44,9 @@ public class TMessage {
     name = "message_id",
     nullable = false
   )
-  private Integer message_id;
+  private Integer messageId;
 
   // endregion id column
-
-
-  // // region sender_id column
-  // /**
-  //  * Sender's ID.
-  //  * Message sended user ID.
-  //  * @ForeigunKey
-  //  */
-  // //リレーションのために定義
-  // @OneToMany
-  // //外部のテーブルとキーを指定
-
-  // @JoinColumn (
-  //   //カラム名
-  //   name ="sender_id",
-  //   //参照先カラム名
-  //   referencedColumnName ="user_id",
-  //   nullable = false
-  // )
-  // private Integer sender_id;
-
-  // // endregion sender_id column
-
-
-  // // region receiver_id column
-  // /**
-  //  * Receiver's ID.
-  //  * Message received user ID.
-  //  * @ForeigunKey
-  //  */
-  // // リレーションのために定義
-  // @OneToMany
-  // //外部のテーブルとキーを指定
-  // @JoinColumn (
-  //   //カラム名
-  //   name ="receiver_id",
-  //   //参照先カラム名
-  //   referencedColumnName ="user_id",
-  //   nullable = false
-  // )
-  // private Integer receiver_id;
-
-  // // endregion receiver_id column
 
 
   // region message column
@@ -107,27 +63,6 @@ public class TMessage {
   // endregion message column
 
 
-  // // region room_id column
-  // /**
-  //  * Chat room ID
-  //  * ID of the room to which the Message belongs.
-  //  * @ForeigunKey
-  //  */
-  // //リレーションのために定義
-  // @OneToMany
-  // //外部のテーブルとキーを指定
-  // @JoinColumn (
-  //   //カラム名
-  //   name ="room_id",
-  //   //参照先カラム名
-  //   referencedColumnName ="room_id",
-  //   nullable = false
-  // )
-  // private Integer room_id;
-
-  // // endregion room_id column
-
-
   // region create_time column
   /**
    * Created date.
@@ -137,7 +72,7 @@ public class TMessage {
     name = "create_time",
     nullable = false
   )
-  private Date create_time;
+  private Date createTime;
 
   // endregion create_time column
 
@@ -151,25 +86,23 @@ public class TMessage {
     name = "modify_time",
     nullable = false
   )
-  private Date modify_time;
+  private Date modifyTime;
 
   // endregion modify_time column
 
   @ManyToOne
   @JoinColumn(name="sender_id", nullable = false)
-  private TUser sender_user;
+  private TUser senderUser;
 
   @ManyToOne
   @JoinColumn(name="receiver_id", nullable = true)
-  private TUser receiver_user;
+  private TUser receiverUser;
 
-  @ManyToOne
-  @JoinColumn(name="room_id" , nullable = false)
-  private TRoom room;
 
-  @OneToMany(mappedBy = "user_message_favorite_id", cascade = CascadeType.ALL)
-  private Set<TFavorite> favorities;
+  @OneToMany(mappedBy = "userMessageFavoriteId.message", cascade = CascadeType.ALL)
+    private Set<TFavorite> favorites;
 
-  @OneToMany(mappedBy = "user_message_already_read_id", cascade = CascadeType.ALL)
-  private Set<TAlreadyRead> already_read;
+  @OneToMany(mappedBy = "userMessageAlreadyReadId.message", cascade = CascadeType.ALL)
+    private Set<TAlreadyRead> alreadyReads;
+
 }

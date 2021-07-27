@@ -10,9 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -33,8 +30,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TUser {
-
-  // region id column
+  // region id column---
   /**
    * User ID.
    * @PrimaryKey
@@ -45,11 +41,11 @@ public class TUser {
     name = "user_id",
     nullable = false
   )
-  private Integer user_id;
+  private Integer userId;
 
-  // endregion id column
+  // endregion id column---
 
-  // region mail column
+  // region mail column---
   /**
    * User user_mail.
    */
@@ -57,12 +53,11 @@ public class TUser {
     name = "user_mail",
     nullable = false
   )
-  private String user_mail;
+  private String userMail;
 
-  // endregion user_mail column
+  // endregion user_mail column---
 
-
-  // region user_password column
+  // region user_password column---
   /**
    * User password.
    */
@@ -70,12 +65,11 @@ public class TUser {
     name = "user_password",
     nullable = false
   )
-  private String user_password;
+  private String userPassword;
 
-  // endregion user_password column
+  // endregion user_password column---
 
-
-  // region user_name column
+  // region user_name column---
   /**
    * User name.
    * The name used in the app.
@@ -84,12 +78,11 @@ public class TUser {
     name = "user_name",
     nullable = false
   )
-  private String user_name;
+  private String userName;
 
-  // endregion user_name column
+  // endregion user_name column---
 
-
-  // region user_profile column
+  // region user_profile column---
   /**
    * User profile.
    * User profile statement.
@@ -98,12 +91,11 @@ public class TUser {
     name = "user_profile",
     nullable = true
   )
-  private String user_profile;
+  private String userProfile;
 
-  // endregion user_profile column
+  // endregion user_profile column---
 
-
-  // region deleted column
+  // region deleted column---
   /**
    * Deleted status.
    * User delete status.
@@ -115,10 +107,9 @@ public class TUser {
   )
   private int deleted;
 
-  // endregion deleted column
+  // endregion deleted column---
 
-
-  // region role column
+  // region role column---
   /**
    * User role.
    * Roletype
@@ -130,30 +121,9 @@ public class TUser {
   )
   private String role;
 
-  // endregion role column
+  // endregion role column---
 
-
-  // // region icon_id column
-  // /**
-  //  * User icon id.
-  //  * User icon image id.
-  //  * @ForeigunKey
-  //  */
-  // @OneToOne
-  // //外部のテーブルとキーを指定
-  // @JoinColumn (
-  //   //カラム名
-  //   name ="icon_id",
-  //   //参照先カラム名
-  //   referencedColumnName ="image_id",
-  //   nullable = false
-  // )
-  // private Integer icon_id;
-
-  // // endregion icon_id column
-
-
-  // region create_time column
+  // region create_time column---
   /**
    * Created date.
    * User creation date.
@@ -162,12 +132,12 @@ public class TUser {
     name = "create_time",
     nullable = false
   )
-  private Date create_time;
+  private Date createTime;
 
-  // endregion create_time column
+  // endregion create_time column---
 
 
-  // region last_login_time column
+  // region last_login_time column---
   /**
    * Created date.
    * User creation date.
@@ -176,12 +146,11 @@ public class TUser {
     name = "last_login_time",
     nullable = false
   )
-  private Date last_login_time;
+  private Date lastLoginTime;
 
-  // endregion last_login_time column
+  // endregion last_login_time column---
 
-
-  // region modify_time column
+  // region modify_time column---
   /**
    * Modify date.
    * User update date.
@@ -190,68 +159,43 @@ public class TUser {
     name = "modify_time",
     nullable = false
   )
-  private Date modify_time;
+  private Date modifyTime;
 
-  // endregion modify_time column
+  // endregion modify_time column---
 
-
- // region icon_id column
-  /**
-   * User icon id.
-   * User icon image id.
-   * @ForeigunKey
-   */
-  //リレーションのために定義
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "icon_id", nullable = true)
-  private TImage icon;
-
-  // endregion icon_id column
-
-
-  // region sender_id column
+  // region sender_id column---
   /**
    * Sender's ID.
    * Message sended user ID.
    * @ForeigunKey
    */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "sender_user")
-  private List<TMessage> send_message_list;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderUser")
+  private List<TMessage> sendMessageList;
 
-  // endregion sender_id column
+  // endregion sender_id column---
 
-
-  // region receiver_id column
+  // region receiver_id column---
   /**
    * Receiver's ID.
    * Message received user ID.
    * @ForeigunKey
    */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiver_user")
-  private List<TMessage> receiv_message_list;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverUser")
+  private List<TMessage> receiverMessageList;
 
-  // endregion receiver_id column
-
-  // region room_creater_id column
-  /**
-   * Room creator id.
-   * @ForeigunKey
-   */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "room_creater")
-  private List<TRoom> room_creater_list;
-
-  // endregion room_creater_id column
+  // endregion receiver_id column---
 
 
-  @OneToMany(mappedBy = "user_message_favorite_id", cascade = CascadeType.ALL)
-    private Set<TFavorite> favorities;
+  @OneToMany(mappedBy = "userMessageFavoriteId.user", cascade = CascadeType.ALL)
+    private Set<TFavorite> favorites;
 
-  @OneToMany(mappedBy = "user_follow_id", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "userMessageAlreadyReadId.user", cascade = CascadeType.ALL)
+    private Set<TAlreadyRead> alreadyReads;
+
+  @OneToMany(mappedBy = "userUserFollowId.follow", cascade = CascadeType.ALL)
     private Set<TFollow> follows;
 
-  @OneToMany(mappedBy = "user_message_already_read_id", cascade = CascadeType.ALL)
-  private Set<TAlreadyRead> already_read;
+  @OneToMany(mappedBy = "userUserFollowId.follower", cascade = CascadeType.ALL)
+    private Set<TFollow> followers;
 
-  @OneToMany(mappedBy = "user_room_relation_id", cascade = CascadeType.ALL)
-  private Set<TUserRoomRelation> user_room_relations;
 }
