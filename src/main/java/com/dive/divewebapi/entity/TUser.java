@@ -203,6 +203,9 @@ public class TUser {
   @OneToMany(mappedBy = "userMessageAlreadyReadId.user", cascade = CascadeType.ALL)
     private Set<TAlreadyRead> alreadyReads;
 
+  @OneToMany(mappedBy = "userRoomRelationId.user", cascade = CascadeType.ALL)
+    private Set<TUserRoomRelation> userRoomRelations;
+
   @OneToMany(mappedBy = "userUserFollowId.follow", cascade = CascadeType.ALL)
     private Set<TFollow> follows;
 
