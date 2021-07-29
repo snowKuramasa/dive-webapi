@@ -9,7 +9,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -196,6 +198,17 @@ public class TUser {
 
   // endregion room_creater_id column---
 
+  // region icon_id column---
+  /**
+   * user icon.
+   * user icon ID.
+   * @ForeigunKey
+   */
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "icon_id", nullable = true)
+  private TImage icon;
+
+  // endregion icon_id column---
 
   @OneToMany(mappedBy = "userMessageFavoriteId.user", cascade = CascadeType.ALL)
     private Set<TFavorite> favorites;

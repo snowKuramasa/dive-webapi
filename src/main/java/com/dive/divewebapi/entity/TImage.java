@@ -28,61 +28,50 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="t_room")
+@Table(name="t_image")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TRoom {
+public class TImage {
 
   // region id column---
   /**
-   * Room ID.
+   * Image ID.
    * @PrimaryKey
    */
   @Id
   @GeneratedValue
   @Column(
-    name = "room_id",
+    name = "image_id",
     nullable = false
   )
-  private Integer room_id;
+  private Integer image_id;
 
   // endregion id column---
 
-  // region thumbnail_id column---
-  // /**
-  //  * thumbnail id.
-  //  * @ForeigunKey
-  //  */
-  @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "thumbnail_id", nullable = true)
-  private TImage thumbnail;
-
-  // endregion thumbnail_id column---
-
-
-  // region room_creater_id column---
-
+  // region image_url column---
   /**
-   * user table foreigun key name-> name="room_creater_id"
+   * Image url.
    */
-  @ManyToOne
-  @JoinColumn(name="room_creater_id", nullable = false)
-  private TUser roomCreater;
+  @Column(
+    name = "image_url",
+    nullable = false
+  )
+  private String image_url;
 
-  // endregion room_creater_id column---
+  // endregion image_url column---
 
-  // region room_name column---
+  // region image_name column---
   /**
    * Image name.
    */
   @Column(
-    name = "room_name",
+    name = "image_name",
     nullable = false
   )
-  private String room_name;
+  private String image_name;
 
-  // endregion room_name column---
+  // endregion image_name column---
 
 
   // region description column---
@@ -90,10 +79,10 @@ public class TRoom {
    * Room description.
    */
   @Column(
-    name = "room_description",
+    name = "image_description",
     nullable = true
   )
-  private String room_description;
+  private String image_description;
 
   // endregion description column---
 
@@ -125,20 +114,11 @@ public class TRoom {
 
   // endregion modify_time column---
 
-  // // region room_id column---
-  // /**
-  //  * Chat room ID
-  //  * ID of the room to which the Message belongs.
-  //  * @ForeigunKey
-  //  */
-  // // //リレーションのために定義
-  // @OneToMany( mappedBy = "room", cascade = CascadeType.ALL)
-  // // @OneToMany(cascade = CascadeType.ALL)
-  // // @JoinColumn(name = "room_id", nullable = true)
-  // private List<TMessage> room_message_list;
 
-  // // endregion room_id column---
+  @OneToOne(mappedBy = "icon")
+    private TUser user;
 
-  // @OneToMany(mappedBy = "user_room_relation_id", cascade = CascadeType.ALL)
-  // private Set<TUserRoomRelation> user_room_relations;
+  @OneToOne(mappedBy = "thumbnail")
+    private TRoom room;
+
 }
