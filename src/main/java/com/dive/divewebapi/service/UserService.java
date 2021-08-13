@@ -14,8 +14,10 @@ public interface UserService {
 
   public Optional<TUser>  getById(Integer userId);
 
-  public TUser save();
+  public TUser save(TUser user);
 
-  public TUser delete();
+  public TUser update(TUser user);
+
+  public TUser delete(TUser user);
 
 }

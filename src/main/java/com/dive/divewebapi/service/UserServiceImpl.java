@@ -15,39 +15,49 @@ public class UserServiceImpl implements UserService{
 @Autowired
 UserRepository userRepository;
 
+  /**
+   * get all users
+   */
   @Override
   public List<TUser> getAll(){
     List<TUser> users = userRepository.findAll();
     return users;
   }
 
+  /**
+   * get by ID
+   */
   @Override
   public Optional<TUser> getById(Integer userId) {
 
-    Optional<TUser> user;
-    //Optionalは検索して無ければnullを返す型という意味
-    //TODO:Exceptionを返すようにすること
-
+    Optional<TUser> user; //Optionalは検索して無ければnullを返す
     user = userRepository.findById(userId);
     return user;
   }
 
+  /**
+   * save
+   */
   @Override
-  public TUser save() {
-    // TODO Auto-generated method stub
-    return null;
+  public TUser save(TUser user) {
+    return userRepository.save(user);
   }
 
+  /**
+   * update
+   */
   @Override
-  public TUser delete() {
-    // TODO Auto-generated method stub
-    return null;
+  public TUser update(TUser user) {
+    return userRepository.save(user);
+  }
+
+  /**
+   * logical delete
+   */
+  @Override
+  public TUser delete(TUser user) {
+    int deleteFrag = 1;
+    user.setDeleted(deleteFrag);
+    return userRepository.save(user);
   };
-
-  // public UserRepository getById();
-
-  // public UserRepository save();
-
-  // public UserRepository delete();
-
 }
