@@ -43,8 +43,7 @@ public class TUser {
   @Id
   @GeneratedValue
   @Column(
-    name = "user_id",
-    nullable = false
+    name = "user_id"
   )
   private Integer userId;
 
@@ -134,8 +133,7 @@ public class TUser {
    * User creation date.
    */
   @Column(
-    name = "create_time",
-    nullable = false
+    name = "create_time"
   )
   private Date createTime;
 
@@ -149,6 +147,7 @@ public class TUser {
    */
   @Column(
     name = "last_login_time",
+    // TODO:ログイン時に更新するような処理にしてnullableを外す
     nullable = false
   )
   private Date lastLoginTime;
@@ -161,8 +160,7 @@ public class TUser {
    * User update date.
    */
   @Column(
-    name = "modify_time",
-    nullable = false
+    name = "modify_time"
   )
   private Date modifyTime;
 
