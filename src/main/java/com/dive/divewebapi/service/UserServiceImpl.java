@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dive.divewebapi.entity.TUser;
+import com.dive.divewebapi.exception.UserNotSaveException;
 import com.dive.divewebapi.exception.UserNotFoundException;
 import com.dive.divewebapi.repository.UserRepository;
 
@@ -37,9 +38,13 @@ UserRepository userRepository;
 
   /**
    * save
+   * @throws UserNotSaveException
    */
   @Override
-  public TUser save(TUser user) {
+  public TUser save(TUser user) throws UserNotSaveException {
+    //リクエストデータにuserIdが入っているときは例外
+    //Exception when userId is included in request data.
+    if(user.getUserId() == null) throw new UserNotSaveException();
     return userRepository.save(user);
   }
 

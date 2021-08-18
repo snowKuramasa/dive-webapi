@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dive.divewebapi.entity.TUser;
+import com.dive.divewebapi.exception.UserNotSaveException;
 
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public interface UserService {
 
   public Optional<TUser>  getById(Integer userId);
 
-  public TUser save(TUser user);
+  public TUser save(TUser user) throws UserNotSaveException;
 
   public TUser update(TUser user);
 

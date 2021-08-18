@@ -3,6 +3,7 @@ package com.dive.divewebapi.controller;
 import java.util.List;
 
 import com.dive.divewebapi.entity.TUser;
+import com.dive.divewebapi.exception.UserNotSaveException;
 import com.dive.divewebapi.exception.UserNotFoundException;
 import com.dive.divewebapi.service.UserServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,9 +34,16 @@ public class UserController {
 
   @PostMapping
   TUser postUser(@RequestBody TUser user) {
-      TUser userEntity = userservice.save(user);
-      return userEntity;
 
+    try {
+
+      userservice.save(user);
+
+    } catch (UserNotSaveException e) {
+
+      e.setMessage("This user could not saved.");
+      System.err.println(e.getMessage());
+    }
+    return user;
   }
-
 }
