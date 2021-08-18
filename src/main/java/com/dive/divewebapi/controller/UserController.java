@@ -24,6 +24,9 @@ public class UserController {
   @Autowired
   UserServiceImpl userservice;
 
+  
+  private TUser savedUser;
+
   @GetMapping
   List<TUser> getUsers(){
       List<TUser> userEntityList = userservice.getAll();
@@ -37,13 +40,14 @@ public class UserController {
 
     try {
 
-      userservice.save(user);
+      savedUser = userservice.save(user);
 
     } catch (UserNotSaveException e) {
 
       e.setMessage("This user could not saved.");
       System.err.println(e.getMessage());
+      //FIXME:リクエストステータス200で返ってくるので修正必要
     }
-    return user;
+    return savedUser;
   }
 }
