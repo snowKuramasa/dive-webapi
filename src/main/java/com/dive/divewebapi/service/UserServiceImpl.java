@@ -42,7 +42,7 @@ UserRepository userRepository;
    */
   @Override
   public TUser save(TUser user) throws UserNotSaveException {
-    //リクエストデータにuserIdが入っているときは例外
+    //リクエストデータにuserIdが入っているときは保存不可
     //Exception when userId is included in request data.
     if(user.getUserId() != null) throw new UserNotSaveException();
     return userRepository.save(user);

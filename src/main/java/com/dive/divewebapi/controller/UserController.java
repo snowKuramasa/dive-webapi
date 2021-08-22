@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,26 +29,27 @@ public class UserController {
   private TUser savedUser;
 
   @GetMapping
-  List<TUser> getUsers(){
+  ResponseEntity<List<TUser>> getUsers(){
       List<TUser> userEntityList = userservice.getAll();
 
-      return userEntityList;
+      return ResponseEntity.ok(userEntityList);
 
   }
 
   @PostMapping
-  TUser postUser(@RequestBody TUser user) {
+  ResponseEntity<TUser> postUser(@RequestBody TUser user) {
 
     try {
 
       savedUser = userservice.save(user);
+      return ResponseEntity.ok(savedUser);
 
     } catch (UserNotSaveException e) {
 
       e.setMessage("This user could not saved.");
       System.err.println(e.getMessage());
-      //FIXME:リクエストステータス200で返ってくるので修正必要
+
+      return ResponseEntity.badRequest().build();
     }
-    return savedUser;
   }
 }
