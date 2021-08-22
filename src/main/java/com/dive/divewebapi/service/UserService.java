@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dive.divewebapi.entity.TUser;
+import com.dive.divewebapi.exception.UserNotFoundException;
 import com.dive.divewebapi.exception.UserNotSaveException;
 
 import org.springframework.stereotype.Service;
@@ -11,9 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
 
-  public List<TUser> getAll();
+  public List<TUser> getAll() throws UserNotFoundException;
 
-  public Optional<TUser>  getById(Integer userId);
+  public Optional<TUser>  getById(Integer userId) throws UserNotFoundException;
 
   public TUser save(TUser user) throws UserNotSaveException;
 

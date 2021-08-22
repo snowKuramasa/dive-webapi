@@ -20,8 +20,11 @@ UserRepository userRepository;
    * get all users
    */
   @Override
-  public List<TUser> getAll(){
+  public List<TUser> getAll() throws UserNotFoundException {
     List<TUser> users = userRepository.findAll();
+
+    if(users.size() == 0) throw new UserNotFoundException();
+
     return users;
   }
 
@@ -29,10 +32,13 @@ UserRepository userRepository;
    * get by ID
    */
   @Override
-  public Optional<TUser> getById(Integer userId) {
+  public Optional<TUser> getById(Integer userId) throws UserNotFoundException {
 
-    Optional<TUser> user; //Optionalは検索して無ければnullを返す
+    Optional<TUser> user; //Optionalはnull許容型
     user = userRepository.findById(userId);
+
+    if(user.isEmpty()) throw new UserNotFoundException();
+
     return user;
   }
 
