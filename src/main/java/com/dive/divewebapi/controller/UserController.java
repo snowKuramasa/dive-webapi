@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,8 +28,6 @@ public class UserController {
   @Autowired
   UserServiceImpl userservice;
 
-  
-  private TUser savedUser;
 
   @GetMapping
   ResponseEntity<List<TUser>> getUsers() {
@@ -71,8 +70,8 @@ public class UserController {
 
     try {
 
-      savedUser = userservice.save(user);
-      return ResponseEntity.ok(savedUser);
+      TUser savedUserEntity = userservice.save(user);
+      return ResponseEntity.ok(savedUserEntity);
 
     } catch (UserNotSaveException e) {
 
@@ -80,6 +79,40 @@ public class UserController {
       System.err.println(e.getMessage());
 
       return ResponseEntity.badRequest().build();
+    }
+  }
+
+  @PutMapping("/{id}")
+  ResponseEntity<TUser> putUser(
+    @PathVariable String id,
+    @RequestBody TUser user
+  ) throws UserNotSaveException {
+
+    Integer userId = Integer.parseInt(id);
+
+    try {
+      Optional<TUser> userEntity = userservice.getById(userId);
+
+      //get TUser entity
+      TUser updateUserEntity = userEntity.get();
+
+      //set request body
+      updateUserEntity.setUserName(user.getUserName());
+      updateUserEntity.setUserMail(user.getUserMail());
+      updateUserEntity.setUserPassword(user.getUserPassword());
+      updateUserEntity.setUserProfile(user.getUserProfile());
+
+      //save entity
+      TUser updatedUser = userservice.update(updateUserEntity);
+
+      return ResponseEntity.ok(updatedUser);
+
+    } catch (UserNotFoundException e) {
+
+      e.setMessage("This user not found.");
+      System.err.println(e.getMessage());
+
+      return ResponseEntity.notFound().build();
     }
   }
 }
