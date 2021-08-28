@@ -71,8 +71,7 @@ public class TMessage {
    * Message creation date.
    */
   @Column(
-    name = "create_time",
-    nullable = false
+    name = "create_time"
   )
   private Date createTime;
 
@@ -85,8 +84,7 @@ public class TMessage {
    * Message update date.
    */
   @Column(
-    name = "modify_time",
-    nullable = false
+    name = "modify_time"
   )
   private Date modifyTime;
 
