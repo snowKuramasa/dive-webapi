@@ -1,6 +1,6 @@
 package com.dive.divewebapi.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -8,10 +8,13 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 
@@ -40,8 +43,7 @@ public class TUser {
   @Id
   @GeneratedValue
   @Column(
-    name = "user_id",
-    nullable = false
+    name = "user_id"
   )
   private Integer userId;
 
@@ -131,8 +133,7 @@ public class TUser {
    * User creation date.
    */
   @Column(
-    name = "create_time",
-    nullable = false
+    name = "create_time"
   )
   private Date createTime;
 
@@ -146,6 +147,7 @@ public class TUser {
    */
   @Column(
     name = "last_login_time",
+    // TODO:ログイン時に更新するような処理にしてnullableを外す
     nullable = false
   )
   private Date lastLoginTime;
@@ -158,8 +160,7 @@ public class TUser {
    * User update date.
    */
   @Column(
-    name = "modify_time",
-    nullable = false
+    name = "modify_time"
   )
   private Date modifyTime;
 
@@ -171,7 +172,10 @@ public class TUser {
    * Message sended user ID.
    * @ForeigunKey
    */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderUser")
+  @OneToMany(
+    cascade = CascadeType.ALL,
+    mappedBy = "senderUser"
+  )
   private List<TMessage> sendMessageList;
 
   // endregion sender_id column---
@@ -182,7 +186,10 @@ public class TUser {
    * Message received user ID.
    * @ForeigunKey
    */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverUser")
+  @OneToMany(
+    cascade = CascadeType.ALL,
+    mappedBy = "receiverUser"
+  )
   private List<TMessage> receiverMessageList;
 
   // endregion receiver_id column---
@@ -193,7 +200,10 @@ public class TUser {
    * room creater ID.
    * @ForeigunKey
    */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomCreater")
+  @OneToMany(
+    cascade = CascadeType.ALL,
+    mappedBy = "roomCreater"
+  )
   private List<TRoom> roomCreaterList;
 
   // endregion room_creater_id column---
@@ -205,10 +215,15 @@ public class TUser {
    * @ForeigunKey
    */
   @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "icon_id", nullable = true)
+  @JoinColumn(
+    name = "icon_id",
+    nullable = true
+  )
   private TImage icon;
 
   // endregion icon_id column---
+
+  // region relation
 
   @OneToMany(mappedBy = "userMessageFavoriteId.user", cascade = CascadeType.ALL)
     private Set<TFavorite> favorites;
@@ -224,6 +239,8 @@ public class TUser {
 
   @OneToMany(mappedBy = "userUserFollowId.follower", cascade = CascadeType.ALL)
     private Set<TFollow> followers;
+
+  // endregion relation
 
   // region getter/setter
 
@@ -278,5 +295,20 @@ public class TUser {
     public void setModifyTime(Date modifyTime) { this.modifyTime = modifyTime; }
 
   // endregion getter/setter
+
+  // region before save method
+  @PrePersist
+    public void onPrePersist() {
+      setCreateTime(new Date());
+      setModifyTime(new Date());
+    }
+  // endregion before save method
+
+  // region before update method
+  @PreUpdate
+    public void onPreUpdate() {
+      setModifyTime(new Date());
+    }
+  // endregion before update method
 
 }

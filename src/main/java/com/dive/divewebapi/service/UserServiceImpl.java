@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dive.divewebapi.entity.TUser;
+import com.dive.divewebapi.exception.UserNotSaveException;
 import com.dive.divewebapi.exception.UserNotFoundException;
 import com.dive.divewebapi.repository.UserRepository;
 
@@ -19,8 +20,11 @@ UserRepository userRepository;
    * get all users
    */
   @Override
-  public List<TUser> getAll(){
+  public List<TUser> getAll() throws UserNotFoundException {
     List<TUser> users = userRepository.findAll();
+
+    if(users.size() == 0) throw new UserNotFoundException();
+
     return users;
   }
 
@@ -28,18 +32,25 @@ UserRepository userRepository;
    * get by ID
    */
   @Override
-  public Optional<TUser> getById(Integer userId) {
+  public Optional<TUser> getById(Integer userId) throws UserNotFoundException {
 
-    Optional<TUser> user; //Optionalは検索して無ければnullを返す
+    Optional<TUser> user; //Optionalはnull許容型
     user = userRepository.findById(userId);
+
+    if(user.isEmpty()) throw new UserNotFoundException();
+
     return user;
   }
 
   /**
    * save
+   * @throws UserNotSaveException
    */
   @Override
-  public TUser save(TUser user) {
+  public TUser save(TUser user) throws UserNotSaveException {
+    //リクエストデータにuserIdが入っているときは保存不可
+    //Exception when userId is included in request data.
+    if(user.getUserId() != null) throw new UserNotSaveException();
     return userRepository.save(user);
   }
 
