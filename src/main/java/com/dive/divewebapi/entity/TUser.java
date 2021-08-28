@@ -172,7 +172,10 @@ public class TUser {
    * Message sended user ID.
    * @ForeigunKey
    */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "senderUser")
+  @OneToMany(
+    cascade = CascadeType.ALL,
+    mappedBy = "senderUser"
+  )
   private List<TMessage> sendMessageList;
 
   // endregion sender_id column---
@@ -183,7 +186,10 @@ public class TUser {
    * Message received user ID.
    * @ForeigunKey
    */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "receiverUser")
+  @OneToMany(
+    cascade = CascadeType.ALL,
+    mappedBy = "receiverUser"
+  )
   private List<TMessage> receiverMessageList;
 
   // endregion receiver_id column---
@@ -194,7 +200,10 @@ public class TUser {
    * room creater ID.
    * @ForeigunKey
    */
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomCreater")
+  @OneToMany(
+    cascade = CascadeType.ALL,
+    mappedBy = "roomCreater"
+  )
   private List<TRoom> roomCreaterList;
 
   // endregion room_creater_id column---
@@ -206,7 +215,10 @@ public class TUser {
    * @ForeigunKey
    */
   @OneToOne(cascade = CascadeType.ALL)
-  @JoinColumn(name = "icon_id", nullable = true)
+  @JoinColumn(
+    name = "icon_id",
+    nullable = true
+  )
   private TImage icon;
 
   // endregion icon_id column---

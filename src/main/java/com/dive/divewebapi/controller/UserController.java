@@ -53,8 +53,10 @@ public class UserController {
     Integer userId = Integer.parseInt(id);
 
     try {
+      // get TUser entity
       Optional<TUser> userEntity = userservice.getById(userId);
 
+      //TODO:Return response status code 201(created)
       return ResponseEntity.ok(userEntity);
 
     } catch (UserNotFoundException e) {
@@ -71,6 +73,7 @@ public class UserController {
 
     try {
 
+      //save request body
       TUser savedUserEntity = userservice.save(user);
       return ResponseEntity.ok(savedUserEntity);
 
