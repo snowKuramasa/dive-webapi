@@ -1,6 +1,6 @@
 package com.dive.divewebapi.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 
@@ -91,24 +93,66 @@ public class TMessage {
   // endregion modify_time column
 
   /**
-   * user table foreigun key name-> name="sender_id"
+   * message table foreigun key name-> name="sender_id"
    */
   @ManyToOne
   @JoinColumn(name="sender_id", nullable = false)
   private TUser senderUser;
 
   /**
-   * user table foreigun key name-> name="receiver_id"
+   * message table foreigun key name-> name="receiver_id"
    */
   @ManyToOne
   @JoinColumn(name="receiver_id", nullable = true)
   private TUser receiverUser;
 
 
-  @OneToMany(mappedBy = "userMessageFavoriteId.message", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "messageMessageFavoriteId.message", cascade = CascadeType.ALL)
     private Set<TFavorite> favorites;
 
-  @OneToMany(mappedBy = "userMessageAlreadyReadId.message", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "messageMessageAlreadyReadId.message", cascade = CascadeType.ALL)
     private Set<TAlreadyRead> alreadyReads;
+
+
+
+  // region getter/setter
+
+    /**message id getter*/
+    public Integer getMessageId() { return this.messageId; }
+    /**message id setter*/
+    public void setMessageId(Integer id) { this.messageId = id; }
+
+    /**message message getter*/
+    public String getMessage() { return this.message; }
+    /**message message setter*/
+    public void setMessage(String message) { this.message = message; }
+
+    /**message createTime getter*/
+    public Date getCreateTime() { return this.createTime; }
+    /**message createTime setter*/
+    public void setCreateTime(Date createTime) { this.createTime = createTime; }
+
+
+    /**message modifyTime getter*/
+    public Date getModifyTime() { return this.modifyTime; }
+    /**message modifyTime setter*/
+    public void setModifyTime(Date modifyTime) { this.modifyTime = modifyTime; }
+
+  // endregion getter/setter
+
+  // region before save method
+    @PrePersist
+    public void onPrePersist() {
+      setCreateTime(new Date());
+      setModifyTime(new Date());
+    }
+  // endregion before save method
+
+  // region before update method
+  @PreUpdate
+    public void onPreUpdate() {
+      setModifyTime(new Date());
+    }
+  // endregion before update method
 
 }
