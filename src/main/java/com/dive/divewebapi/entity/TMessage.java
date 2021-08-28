@@ -94,14 +94,20 @@ public class TMessage {
    * message table foreigun key name-> name="sender_id"
    */
   @ManyToOne
-  @JoinColumn(name="sender_id", nullable = false)
+  @JoinColumn(
+    name="sender_id", 
+    nullable = false
+  )
   private TUser senderUser;
 
   /**
    * message table foreigun key name-> name="receiver_id"
    */
   @ManyToOne
-  @JoinColumn(name="receiver_id", nullable = true)
+  @JoinColumn(
+    name="receiver_id",
+    nullable = true
+  )
   private TUser receiverUser;
 
 
