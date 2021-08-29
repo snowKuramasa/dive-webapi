@@ -62,4 +62,37 @@ MessageRepository messageRepository;
     return messageRepository.save(message);
   }
 
+  /**
+   *  delete
+   */
+  @Override
+  public TMessage delete(TMessage message) {
+     messageRepository.delete(message);
+     return message;
+  };
+
+  /**
+   * get sender messages
+   */
+  @Override
+  public List<TMessage> getBySenderId(Integer senderId) throws MessageNotFoundException {
+    List<TMessage> messages = messageRepository.findbySenderUserUserId(senderId);
+
+    if(messages.size() == 0) throw new MessageNotFoundException();
+
+    return messages;
+  }
+
+  /**
+   * get receiver messages
+   */
+  @Override
+  public List<TMessage> getByReceiverId(Integer receiverId) throws MessageNotFoundException {
+    List<TMessage> messages = messageRepository.findbySenderUserUserId(receiverId);
+
+    if(messages.size() == 0) throw new MessageNotFoundException();
+
+    return messages;
+  }
+
 }

@@ -136,11 +136,23 @@ public class TMessage {
     /**message createTime setter*/
     public void setCreateTime(Date createTime) { this.createTime = createTime; }
 
-
     /**message modifyTime getter*/
     public Date getModifyTime() { return this.modifyTime; }
     /**message modifyTime setter*/
     public void setModifyTime(Date modifyTime) { this.modifyTime = modifyTime; }
+
+    /**message senderUser getter*/
+    public TUser getSendUser() { return this.senderUser; }
+    /**message senderUser setter*/
+    public void setSenderUser(TUser senderUser) { this.senderUser = senderUser; }
+
+    /**message receiverUser getter*/
+    public TUser getReceiverUser() { return this.receiverUser; }
+    /**message receiverUser setter*/
+    public void setReceiverUser(TUser receiverUser) { this.receiverUser = receiverUser; }
+
+      // endregion getter/setter
+
 
   // endregion getter/setter
 
