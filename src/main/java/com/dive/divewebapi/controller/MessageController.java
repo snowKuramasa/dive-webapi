@@ -5,11 +5,13 @@ import java.util.Optional;
 
 import com.dive.divewebapi.entity.TMessage;
 import com.dive.divewebapi.exception.MessageNotSaveException;
+import com.dive.divewebapi.requestBody.MessageObect;
 import com.dive.divewebapi.exception.MessageNotFoundException;
 import com.dive.divewebapi.service.MessageServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -107,15 +109,17 @@ public class MessageController {
   }
 
   @PostMapping
-  ResponseEntity<TMessage> postMessage(@RequestBody TMessage message) {
+  ResponseEntity<TMessage> postMessage(@RequestBody MessageObect message) {
 
     try {
-      //FIXME:sender receiverのセット方法を調査する
-      //request body の形がTMessage だとsenderはオブジェクトで送られてこないといけない？
-      //→別のrequestbody用のクラスを作成し、そのクラスでIDからTUserの型を指定し、TMessageを作成する
-      //他に方法がないか検討
-      //save request body
-      TMessage savedMessageEntity = messageservice.save(message);
+      //JPA Entity
+      TMessage saveMessageEntity = new TMessage();
+
+      //copy request body property to entity
+      BeanUtils.copyProperties(saveMessageEntity, message);
+
+      TMessage savedMessageEntity = messageservice.save(saveMessageEntity);
+
       return ResponseEntity.ok(savedMessageEntity);
 
     } catch (MessageNotSaveException e) {
