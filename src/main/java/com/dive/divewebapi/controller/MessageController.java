@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dive.divewebapi.entity.TMessage;
+import com.dive.divewebapi.entity.TUser;
 import com.dive.divewebapi.exception.MessageNotSaveException;
+import com.dive.divewebapi.exception.UserNotFoundException;
 import com.dive.divewebapi.requestBody.MessageObect;
 import com.dive.divewebapi.exception.MessageNotFoundException;
 import com.dive.divewebapi.service.MessageServiceImpl;
+import com.dive.divewebapi.service.UserServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -30,6 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessageController {
   @Autowired
   MessageServiceImpl messageService;
+
+  @Autowired
+  UserServiceImpl userService;
 
 
   @GetMapping
@@ -109,14 +115,19 @@ public class MessageController {
   }
 
   @PostMapping
-  ResponseEntity<TMessage> postMessage(@RequestBody MessageObect message) {
+  ResponseEntity<TMessage> postMessage(@RequestBody MessageObect message) throws UserNotFoundException {
 
     try {
       //JPA Entity
       TMessage saveMessageEntity = new TMessage();
 
-      //copy request body property to entity
-      BeanUtils.copyProperties(saveMessageEntity, message);
+      //set request body
+      TUser senderUser = userService.getById(message.getSenderUserId()).get();
+      TUser receiverUser = userService.getById(message.getReceiverUserId()).get();
+
+      saveMessageEntity.setMessage(message.getMessage());
+      saveMessageEntity.setSenderUser(senderUser);
+      saveMessageEntity.setReceiverUser(receiverUser);
 
       TMessage savedMessageEntity = messageService.save(saveMessageEntity);
 
@@ -140,13 +151,12 @@ public class MessageController {
     Integer messageId = Integer.parseInt(id);
 
     try {
-      Optional<TMessage> messageEntity = messageService.getById(messageId);
 
       //get TMessage entity
-      TMessage updateMessageEntity = messageEntity.get();
+      TMessage updateMessageEntity = messageService.getById(messageId).get();
 
-      //set request body property to property
-      BeanUtils.copyProperties(updateMessageEntity.getMessage(), message.getMessage());
+      //set request body
+      updateMessageEntity.setMessage(message.getMessage());
 
       //save entity
       TMessage updatedMessage = messageService.update(updateMessageEntity);

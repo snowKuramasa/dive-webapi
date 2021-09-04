@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dive.divewebapi.entity.TMessage;
+import com.dive.divewebapi.entity.TUser;
 import com.dive.divewebapi.exception.MessageNotFoundException;
 import com.dive.divewebapi.exception.MessageNotSaveException;
 import com.dive.divewebapi.repository.MessageRepository;
+import com.dive.divewebapi.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 public class MessageServiceImpl implements MessageService{
 @Autowired
 MessageRepository messageRepository;
+
+UserRepository userRepository;
 
   /**
    * get all messages
@@ -76,7 +80,10 @@ MessageRepository messageRepository;
    */
   @Override
   public List<TMessage> getBySenderId(Integer senderId) throws MessageNotFoundException {
-    List<TMessage> messages = messageRepository.findbySenderUserUserId(senderId);
+
+    // TUser senderUser = userRepository.getById(senderId);
+
+    List<TMessage> messages = messageRepository.findBySenderUserUserId(senderId);
 
     if(messages.size() == 0) throw new MessageNotFoundException();
 
@@ -88,7 +95,10 @@ MessageRepository messageRepository;
    */
   @Override
   public List<TMessage> getByReceiverId(Integer receiverId) throws MessageNotFoundException {
-    List<TMessage> messages = messageRepository.findbySenderUserUserId(receiverId);
+
+    // TUser receiverUser = userRepository.getById(receiverId);
+
+    List<TMessage> messages = messageRepository.findByReceiverUserUserId(receiverId);
 
     if(messages.size() == 0) throw new MessageNotFoundException();
 

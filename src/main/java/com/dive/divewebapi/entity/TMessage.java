@@ -43,8 +43,7 @@ public class TMessage {
 	@Setter
   @GeneratedValue
   @Column(
-    name = "message_id",
-    nullable = false
+    name = "message_id"
   )
   private Integer messageId;
 
@@ -111,10 +110,10 @@ public class TMessage {
   private TUser receiverUser;
 
 
-  @OneToMany(mappedBy = "messageMessageFavoriteId.message", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "userMessageFavoriteId.message", cascade = CascadeType.ALL)
     private Set<TFavorite> favorites;
 
-  @OneToMany(mappedBy = "messageMessageAlreadyReadId.message", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "userMessageAlreadyReadId.message", cascade = CascadeType.ALL)
     private Set<TAlreadyRead> alreadyReads;
 
 

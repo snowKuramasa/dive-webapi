@@ -21,19 +21,19 @@ public class MessageObect {
 
   private Integer senderUserId;
 
-  private Optional<TUser> senderUser;
-
   private Integer receiverUserId;
 
-  private Optional<TUser> receiverUser;
-
-  public MessageObect() throws UserNotFoundException{
-    this.senderUser   = userService.getById(senderUserId);
-    this.receiverUser = userService.getById(receiverUserId);
-  }
 
   public String getMessage() {
     return this.message;
+  }
+
+  public Integer getSenderUserId() {
+    return this.senderUserId;
+  }
+
+  public Integer getReceiverUserId() {
+    return this.receiverUserId;
   }
 
 }
