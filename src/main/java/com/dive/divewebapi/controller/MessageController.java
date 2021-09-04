@@ -29,14 +29,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("rest/messages")
 public class MessageController {
   @Autowired
-  MessageServiceImpl messageservice;
+  MessageServiceImpl messageService;
 
 
   @GetMapping
   ResponseEntity<List<TMessage>> getMessages() {
 
     try {
-      List<TMessage> messageEntityList = messageservice.getAll();
+      List<TMessage> messageEntityList = messageService.getAll();
 
       return ResponseEntity.ok(messageEntityList);
 
@@ -56,7 +56,7 @@ public class MessageController {
 
     try {
       // get TMessage entity
-      Optional<TMessage> messageEntity = messageservice.getById(messageId);
+      Optional<TMessage> messageEntity = messageService.getById(messageId);
 
       //TODO:Return response status code 201(created)
       return ResponseEntity.ok(messageEntity);
@@ -76,7 +76,7 @@ public class MessageController {
     Integer senderId = Integer.parseInt(id);
 
     try {
-      List<TMessage> messageEntityList = messageservice.getBySenderId(senderId);
+      List<TMessage> messageEntityList = messageService.getBySenderId(senderId);
 
       return ResponseEntity.ok(messageEntityList);
 
@@ -95,7 +95,7 @@ public class MessageController {
     Integer receiverId = Integer.parseInt(id);
 
     try {
-      List<TMessage> messageEntityList = messageservice.getByReceiverId(receiverId);
+      List<TMessage> messageEntityList = messageService.getByReceiverId(receiverId);
 
       return ResponseEntity.ok(messageEntityList);
 
@@ -118,7 +118,7 @@ public class MessageController {
       //copy request body property to entity
       BeanUtils.copyProperties(saveMessageEntity, message);
 
-      TMessage savedMessageEntity = messageservice.save(saveMessageEntity);
+      TMessage savedMessageEntity = messageService.save(saveMessageEntity);
 
       return ResponseEntity.ok(savedMessageEntity);
 
@@ -134,22 +134,22 @@ public class MessageController {
   @PutMapping("/{id}")
   ResponseEntity<TMessage> putMessage(
     @PathVariable String id,
-    @RequestBody TMessage message
+    @RequestBody MessageObect message
   ) throws MessageNotSaveException {
 
     Integer messageId = Integer.parseInt(id);
 
     try {
-      Optional<TMessage> messageEntity = messageservice.getById(messageId);
+      Optional<TMessage> messageEntity = messageService.getById(messageId);
 
       //get TMessage entity
       TMessage updateMessageEntity = messageEntity.get();
 
-      //set request body
-      updateMessageEntity.setMessage(message.getMessage());
+      //set request body property to property
+      BeanUtils.copyProperties(updateMessageEntity.getMessage(), message.getMessage());
 
       //save entity
-      TMessage updatedMessage = messageservice.update(updateMessageEntity);
+      TMessage updatedMessage = messageService.update(updateMessageEntity);
 
       return ResponseEntity.ok(updatedMessage);
 
@@ -168,11 +168,11 @@ public class MessageController {
     Integer messageId = Integer.parseInt(id);
 
     try {
-      Optional<TMessage> messageEntity = messageservice.getById(messageId);
+      Optional<TMessage> messageEntity = messageService.getById(messageId);
 
       TMessage deleteMessageEntity = messageEntity.get();
 
-      TMessage deletedMessageEntity = messageservice.delete(deleteMessageEntity);
+      TMessage deletedMessageEntity = messageService.delete(deleteMessageEntity);
 
       return ResponseEntity.ok(deletedMessageEntity);
 

@@ -32,6 +32,10 @@ public class MessageObect {
     this.receiverUser = userService.getById(receiverUserId);
   }
 
+  public String getMessage() {
+    return this.message;
+  }
+
 }
 
 
