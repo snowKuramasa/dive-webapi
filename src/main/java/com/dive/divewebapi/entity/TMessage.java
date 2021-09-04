@@ -141,7 +141,7 @@ public class TMessage {
     public void setModifyTime(Date modifyTime) { this.modifyTime = modifyTime; }
 
     /**message senderUser getter*/
-    public TUser getSendUser() { return this.senderUser; }
+    public TUser getSenderUser() { return this.senderUser; }
     /**message senderUser setter*/
     public void setSenderUser(TUser senderUser) { this.senderUser = senderUser; }
 
