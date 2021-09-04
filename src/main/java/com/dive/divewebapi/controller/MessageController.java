@@ -7,7 +7,9 @@ import com.dive.divewebapi.entity.TMessage;
 import com.dive.divewebapi.entity.TUser;
 import com.dive.divewebapi.exception.MessageNotSaveException;
 import com.dive.divewebapi.exception.UserNotFoundException;
-import com.dive.divewebapi.requestBody.MessageObect;
+import com.dive.divewebapi.requestBody.MessageRequest;
+import com.dive.divewebapi.response.MessageResponse;
+import com.dive.divewebapi.response.MessageResponseList;
 import com.dive.divewebapi.exception.MessageNotFoundException;
 import com.dive.divewebapi.service.MessageServiceImpl;
 import com.dive.divewebapi.service.UserServiceImpl;
@@ -39,12 +41,14 @@ public class MessageController {
 
 
   @GetMapping
-  ResponseEntity<List<TMessage>> getMessages() {
+  ResponseEntity<MessageResponseList> getMessages() {
 
     try {
       List<TMessage> messageEntityList = messageService.getAll();
 
-      return ResponseEntity.ok(messageEntityList);
+      MessageResponseList messageResponseList = new MessageResponseList(messageEntityList);
+
+      return ResponseEntity.ok(messageResponseList);
 
     } catch (MessageNotFoundException e) {
 
@@ -56,16 +60,24 @@ public class MessageController {
   }
 
   @GetMapping("/{id}")
-  ResponseEntity<Optional<TMessage>> getMessageById(@PathVariable String id) {
+  ResponseEntity<MessageResponse> getMessageById(@PathVariable String id) {
 
     Integer messageId = Integer.parseInt(id);
 
     try {
       // get TMessage entity
-      Optional<TMessage> messageEntity = messageService.getById(messageId);
+      Optional<TMessage> messageOptionalEntity = messageService.getById(messageId);
+
+      TMessage messageEntity = messageOptionalEntity.get();
+
+      MessageResponse messageResponse = new MessageResponse(messageEntity.getSenderUser(),messageEntity.getReceiverUser());
+
+      messageResponse.setMessage(messageEntity.getMessage());
+      messageResponse.setModifyTime(messageEntity.getModifyTime());
+      messageResponse.setCreateTime(messageEntity.getCreateTime());
 
       //TODO:Return response status code 201(created)
-      return ResponseEntity.ok(messageEntity);
+      return ResponseEntity.ok(messageResponse);
 
     } catch (MessageNotFoundException e) {
 
@@ -115,7 +127,7 @@ public class MessageController {
   }
 
   @PostMapping
-  ResponseEntity<TMessage> postMessage(@RequestBody MessageObect message) throws UserNotFoundException {
+  ResponseEntity<TMessage> postMessage(@RequestBody MessageRequest message) throws UserNotFoundException {
 
     try {
       //JPA Entity
@@ -145,7 +157,7 @@ public class MessageController {
   @PutMapping("/{id}")
   ResponseEntity<TMessage> putMessage(
     @PathVariable String id,
-    @RequestBody MessageObect message
+    @RequestBody MessageRequest message
   ) throws MessageNotSaveException {
 
     Integer messageId = Integer.parseInt(id);
