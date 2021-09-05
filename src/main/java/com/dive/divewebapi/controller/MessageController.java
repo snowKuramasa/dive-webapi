@@ -68,13 +68,13 @@ public class MessageController {
       // get TMessage entity
       Optional<TMessage> messageOptionalEntity = messageService.getById(messageId);
 
-      TMessage messageEntity = messageOptionalEntity.get();
+      TMessage getedMessageEntity = messageOptionalEntity.get();
 
-      MessageResponse messageResponse = new MessageResponse(messageEntity.getSenderUser(),messageEntity.getReceiverUser());
-
-      messageResponse.setMessage(messageEntity.getMessage());
-      messageResponse.setModifyTime(messageEntity.getModifyTime());
-      messageResponse.setCreateTime(messageEntity.getCreateTime());
+      MessageResponse messageResponse = new MessageResponse(
+                                          getedMessageEntity.getSenderUser(),
+                                          getedMessageEntity.getReceiverUser(),
+                                          getedMessageEntity
+                                        );
 
       //TODO:Return response status code 201(created)
       return ResponseEntity.ok(messageResponse);
@@ -89,14 +89,16 @@ public class MessageController {
   }
 
   @GetMapping("/sender/{id}")
-  ResponseEntity<List<TMessage>> getMessagesBySenderId(@PathVariable String id) {
+  ResponseEntity<MessageResponseList> getMessagesBySenderId(@PathVariable String id) {
 
     Integer senderId = Integer.parseInt(id);
 
     try {
       List<TMessage> messageEntityList = messageService.getBySenderId(senderId);
 
-      return ResponseEntity.ok(messageEntityList);
+      MessageResponseList messageResponseList = new MessageResponseList(messageEntityList);
+
+      return ResponseEntity.ok(messageResponseList);
 
     } catch (MessageNotFoundException e) {
 
@@ -108,14 +110,16 @@ public class MessageController {
   }
 
   @GetMapping("/receiver/{id}")
-  ResponseEntity<List<TMessage>> getMessagesByReceiverId(@PathVariable String id) {
+  ResponseEntity<MessageResponseList> getMessagesByReceiverId(@PathVariable String id) {
 
     Integer receiverId = Integer.parseInt(id);
 
     try {
       List<TMessage> messageEntityList = messageService.getByReceiverId(receiverId);
 
-      return ResponseEntity.ok(messageEntityList);
+      MessageResponseList messageResponseList = new MessageResponseList(messageEntityList);
+
+      return ResponseEntity.ok(messageResponseList);
 
     } catch (MessageNotFoundException e) {
 
@@ -127,7 +131,7 @@ public class MessageController {
   }
 
   @PostMapping
-  ResponseEntity<TMessage> postMessage(@RequestBody MessageRequest message) throws UserNotFoundException {
+  ResponseEntity<MessageResponse> postMessage(@RequestBody MessageRequest message) throws UserNotFoundException {
 
     try {
       //JPA Entity
@@ -143,7 +147,13 @@ public class MessageController {
 
       TMessage savedMessageEntity = messageService.save(saveMessageEntity);
 
-      return ResponseEntity.ok(savedMessageEntity);
+      MessageResponse messageResponse = new MessageResponse(
+                                          savedMessageEntity.getSenderUser(),
+                                          savedMessageEntity.getReceiverUser(),
+                                          savedMessageEntity
+                                        );
+
+      return ResponseEntity.ok(messageResponse);
 
     } catch (MessageNotSaveException e) {
 
@@ -155,7 +165,7 @@ public class MessageController {
   }
 
   @PutMapping("/{id}")
-  ResponseEntity<TMessage> putMessage(
+  ResponseEntity<MessageResponse> putMessage(
     @PathVariable String id,
     @RequestBody MessageRequest message
   ) throws MessageNotSaveException {
@@ -171,9 +181,16 @@ public class MessageController {
       updateMessageEntity.setMessage(message.getMessage());
 
       //save entity
-      TMessage updatedMessage = messageService.update(updateMessageEntity);
+      TMessage updatedMessageEntity = messageService.update(updateMessageEntity);
 
-      return ResponseEntity.ok(updatedMessage);
+
+      MessageResponse messageResponse = new MessageResponse(
+                                          updatedMessageEntity.getSenderUser(),
+                                          updatedMessageEntity.getReceiverUser(),
+                                          updatedMessageEntity
+                                        );
+
+      return ResponseEntity.ok(messageResponse);
 
     } catch (MessageNotFoundException e) {
 
@@ -185,7 +202,7 @@ public class MessageController {
   }
 
   @DeleteMapping("/{id}")
-  ResponseEntity<TMessage> deleteMessage(@PathVariable String id) {
+  ResponseEntity<MessageResponse> deleteMessage(@PathVariable String id) {
 
     Integer messageId = Integer.parseInt(id);
 
@@ -196,7 +213,14 @@ public class MessageController {
 
       TMessage deletedMessageEntity = messageService.delete(deleteMessageEntity);
 
-      return ResponseEntity.ok(deletedMessageEntity);
+
+      MessageResponse messageResponse = new MessageResponse(
+                                          deletedMessageEntity.getSenderUser(),
+                                          deletedMessageEntity.getReceiverUser(),
+                                          deletedMessageEntity
+                                        );
+
+      return ResponseEntity.ok(messageResponse);
 
     } catch (MessageNotFoundException e) {
 
