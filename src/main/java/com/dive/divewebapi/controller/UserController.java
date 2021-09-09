@@ -27,14 +27,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("rest/users")
 public class UserController {
   @Autowired
-  UserServiceImpl userservice;
+  UserServiceImpl userService;
 
 
   @GetMapping
   ResponseEntity<List<TUser>> getUsers() {
 
     try {
-      List<TUser> userEntityList = userservice.getAll();
+      List<TUser> userEntityList = userService.getAll();
 
       return ResponseEntity.ok(userEntityList);
 
@@ -54,7 +54,7 @@ public class UserController {
 
     try {
       // get TUser entity
-      Optional<TUser> userEntity = userservice.getById(userId);
+      Optional<TUser> userEntity = userService.getById(userId);
 
       //TODO:Return response status code 201(created)
       return ResponseEntity.ok(userEntity);
@@ -74,7 +74,7 @@ public class UserController {
     try {
 
       //save request body
-      TUser savedUserEntity = userservice.save(user);
+      TUser savedUserEntity = userService.save(user);
       return ResponseEntity.ok(savedUserEntity);
 
     } catch (UserNotSaveException e) {
@@ -95,7 +95,7 @@ public class UserController {
     Integer userId = Integer.parseInt(id);
 
     try {
-      Optional<TUser> userEntity = userservice.getById(userId);
+      Optional<TUser> userEntity = userService.getById(userId);
 
       //get TUser entity
       TUser updateUserEntity = userEntity.get();
@@ -107,7 +107,7 @@ public class UserController {
       updateUserEntity.setUserProfile(user.getUserProfile());
 
       //save entity
-      TUser updatedUser = userservice.update(updateUserEntity);
+      TUser updatedUser = userService.update(updateUserEntity);
 
       return ResponseEntity.ok(updatedUser);
 
@@ -126,11 +126,11 @@ public class UserController {
     Integer userId = Integer.parseInt(id);
 
     try {
-      Optional<TUser> userEntity = userservice.getById(userId);
+      Optional<TUser> userEntity = userService.getById(userId);
 
       TUser deleteUserEntity = userEntity.get();
 
-      TUser deletedUserEntity = userservice.delete(deleteUserEntity);
+      TUser deletedUserEntity = userService.delete(deleteUserEntity);
 
       return ResponseEntity.ok(deletedUserEntity);
 

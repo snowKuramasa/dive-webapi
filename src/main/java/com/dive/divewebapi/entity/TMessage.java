@@ -43,8 +43,7 @@ public class TMessage {
 	@Setter
   @GeneratedValue
   @Column(
-    name = "message_id",
-    nullable = false
+    name = "message_id"
   )
   private Integer messageId;
 
@@ -111,10 +110,10 @@ public class TMessage {
   private TUser receiverUser;
 
 
-  @OneToMany(mappedBy = "messageMessageFavoriteId.message", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "userMessageFavoriteId.message", cascade = CascadeType.ALL)
     private Set<TFavorite> favorites;
 
-  @OneToMany(mappedBy = "messageMessageAlreadyReadId.message", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "userMessageAlreadyReadId.message", cascade = CascadeType.ALL)
     private Set<TAlreadyRead> alreadyReads;
 
 
@@ -136,11 +135,23 @@ public class TMessage {
     /**message createTime setter*/
     public void setCreateTime(Date createTime) { this.createTime = createTime; }
 
-
     /**message modifyTime getter*/
     public Date getModifyTime() { return this.modifyTime; }
     /**message modifyTime setter*/
     public void setModifyTime(Date modifyTime) { this.modifyTime = modifyTime; }
+
+    /**message senderUser getter*/
+    public TUser getSenderUser() { return this.senderUser; }
+    /**message senderUser setter*/
+    public void setSenderUser(TUser senderUser) { this.senderUser = senderUser; }
+
+    /**message receiverUser getter*/
+    public TUser getReceiverUser() { return this.receiverUser; }
+    /**message receiverUser setter*/
+    public void setReceiverUser(TUser receiverUser) { this.receiverUser = receiverUser; }
+
+      // endregion getter/setter
+
 
   // endregion getter/setter
 

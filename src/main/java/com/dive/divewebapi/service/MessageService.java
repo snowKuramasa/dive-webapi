@@ -20,5 +20,11 @@ public interface MessageService {
 
   public TMessage update(TMessage message);
 
+  public TMessage delete(TMessage message);
+
+  public List<TMessage> getBySenderId(Integer senderId) throws MessageNotFoundException;
+
+  public List<TMessage> getByReceiverId(Integer receiverId) throws MessageNotFoundException;
+
 
 }
