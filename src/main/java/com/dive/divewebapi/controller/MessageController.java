@@ -1,5 +1,6 @@
 package com.dive.divewebapi.controller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 
@@ -153,7 +155,14 @@ public class MessageController {
                                           savedMessageEntity
                                         );
 
-      return ResponseEntity.ok(messageResponse);
+      //Create path for saved messages.
+      //Expected "api/messages/{messageI}"
+      URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri() //->Expected api/messages
+                .path("/{id}")                                      //->Expected api/messages/{messageId}
+                .buildAndExpand(messageResponse.getMessageId())     //->Expected insert messageId
+                .toUri();
+
+      return ResponseEntity.created(uri).body(messageResponse);
 
     } catch (MessageNotSaveException e) {
 
