@@ -109,6 +109,16 @@ public class TMessage {
   )
   private TUser receiverUser;
 
+  /**
+   * message table foreigun key name-> name="belong_to_room_id"
+   */
+  @ManyToOne
+  @JoinColumn(
+    name="belong_to_room_id",
+    nullable = true
+  )
+  private TRoom belongToRoom;
+
 
   @OneToMany(mappedBy = "userMessageFavoriteId.message", cascade = CascadeType.ALL)
     private Set<TFavorite> favorites;
@@ -149,6 +159,11 @@ public class TMessage {
     public TUser getReceiverUser() { return this.receiverUser; }
     /**message receiverUser setter*/
     public void setReceiverUser(TUser receiverUser) { this.receiverUser = receiverUser; }
+
+    /**message belongToRoom getter*/
+    public TRoom getBelongToRoom() { return this.belongToRoom; }
+    /**message belongToRoom setter*/
+    public void setBelongToRoom(TRoom belongToRoom) { this.belongToRoom = belongToRoom; }
 
       // endregion getter/setter
 

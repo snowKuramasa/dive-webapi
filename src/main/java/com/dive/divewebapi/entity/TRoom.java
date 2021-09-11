@@ -45,7 +45,7 @@ public class TRoom {
     name = "room_id",
     nullable = false
   )
-  private Integer room_id;
+  private Integer roomId;
 
   // endregion id column---
 
@@ -80,7 +80,7 @@ public class TRoom {
     name = "room_name",
     nullable = false
   )
-  private String room_name;
+  private String roomName;
 
   // endregion room_name column---
 
@@ -93,7 +93,7 @@ public class TRoom {
     name = "room_description",
     nullable = true
   )
-  private String room_description;
+  private String roomDescription;
 
   // endregion description column---
 
@@ -107,7 +107,7 @@ public class TRoom {
     name = "create_time",
     nullable = false
   )
-  private Date create_time;
+  private Date createTime;
 
   // endregion create_time column---
 
@@ -121,24 +121,27 @@ public class TRoom {
     name = "modify_time",
     nullable = false
   )
-  private Date modify_time;
+  private Date modifyTime;
 
   // endregion modify_time column---
 
-  // // region room_id column---
-  // /**
-  //  * Chat room ID
-  //  * ID of the room to which the Message belongs.
-  //  * @ForeigunKey
-  //  */
-  // // //リレーションのために定義
-  // @OneToMany( mappedBy = "room", cascade = CascadeType.ALL)
-  // // @OneToMany(cascade = CascadeType.ALL)
-  // // @JoinColumn(name = "room_id", nullable = true)
-  // private List<TMessage> room_message_list;
 
-  // // endregion room_id column---
+  // region relation
+  /**
+   * Belong to message ID.
+   * Send Message in the room of ID.
+   * @ForeigunKey
+   */
+  @OneToMany(
+    cascade = CascadeType.ALL,
+    mappedBy = "belongToRoom"
+  )
+  private List<TMessage> belongToRoomList;
 
-  // @OneToMany(mappedBy = "user_room_relation_id", cascade = CascadeType.ALL)
-  // private Set<TUserRoomRelation> user_room_relations;
+
+
+  @OneToMany(mappedBy = "userRoomRelationId.user", cascade = CascadeType.ALL)
+  private Set<TUserRoomRelation> userRoomRelations;
+
+  // endregion relation
 }
