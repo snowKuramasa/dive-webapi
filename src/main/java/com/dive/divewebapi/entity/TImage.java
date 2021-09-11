@@ -44,12 +44,22 @@ public class TImage {
   @Id
   @GeneratedValue
   @Column(
-    name = "image_id",
-    nullable = false
+    name = "image_id"
   )
   private Integer imageId;
 
   // endregion id column---
+
+  // region image_file_name column---
+  /**
+   * Image name.
+   */
+  @Column(
+    name = "image_file_name"
+  )
+  private String imageFileName;
+
+  // endregion image_file_name column---
 
   // region image_url column---
   /**

@@ -45,8 +45,7 @@ public class TRoom {
   @Id
   @GeneratedValue
   @Column(
-    name = "room_id",
-    nullable = false
+    name = "room_id"
   )
   private Integer roomId;
 

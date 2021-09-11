@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.dive.divewebapi.entity.TImage;
 import com.dive.divewebapi.entity.TMessage;
+import com.dive.divewebapi.entity.TRoom;
 import com.dive.divewebapi.entity.TUser;
 import com.dive.divewebapi.exception.UserNotFoundException;
 import com.dive.divewebapi.service.UserServiceImpl;
@@ -21,9 +22,13 @@ public class RoomResponse {
 
   private Integer roomId;
 
-  private Integer thumbnailId;
+    //TODO:リクエスト時の画像アップロードの処理が改善されるまではコメントアウトしておく
+
+  // private Integer thumbnailId;
 
   private Integer roomCreaterId;
+
+  private String roomCreaterName;
 
   private String roomName;
 
@@ -80,6 +85,22 @@ public class RoomResponse {
   }
 
   //#region cunstructor
+  public RoomResponse(
+    TUser roomCreater,
+    // TImage thumbnail,
+    TRoom roomEntity
+  ) {
+    setRoomCreaterId  (roomCreater.getUserId());
+    setRoomCreaterName(roomCreater.getUserName());
+
+    // setThumbnailId  (thumbnail.getImageId());
+
+    setRoomId (roomEntity.getRoomId());
+    setRoomName (roomEntity.getRoomName());
+    setRoomDescription (roomEntity.getRoomDescription());
+    setModifyTime(roomEntity.getModifyTime());
+    setCreateTime(roomEntity.getCreateTime());
+  }
 
   //#endregion cunstructor
 
