@@ -1,6 +1,6 @@
 package com.dive.divewebapi.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 
@@ -45,7 +47,7 @@ public class TImage {
     name = "image_id",
     nullable = false
   )
-  private Integer image_id;
+  private Integer imageId;
 
   // endregion id column---
 
@@ -57,7 +59,7 @@ public class TImage {
     name = "image_url",
     nullable = false
   )
-  private String image_url;
+  private String imageUrl;
 
   // endregion image_url column---
 
@@ -69,7 +71,7 @@ public class TImage {
     name = "image_name",
     nullable = false
   )
-  private String image_name;
+  private String imageName;
 
   // endregion image_name column---
 
@@ -82,7 +84,7 @@ public class TImage {
     name = "image_description",
     nullable = true
   )
-  private String image_description;
+  private String imageDescription;
 
   // endregion description column---
 
@@ -96,7 +98,7 @@ public class TImage {
     name = "create_time",
     nullable = false
   )
-  private Date create_time;
+  private Date createTime;
 
   // endregion create_time column---
 
@@ -110,7 +112,7 @@ public class TImage {
     name = "modify_time",
     nullable = false
   )
-  private Date modify_time;
+  private Date modifyTime;
 
   // endregion modify_time column---
 
@@ -120,5 +122,21 @@ public class TImage {
 
   @OneToOne(mappedBy = "thumbnail")
     private TRoom room;
+
+
+  // region before save method
+  @PrePersist
+  public void onPrePersist() {
+    setCreateTime(new Date());
+    setModifyTime(new Date());
+  }
+  // endregion before save method
+
+  // region before update method
+  @PreUpdate
+    public void onPreUpdate() {
+      setModifyTime(new Date());
+    }
+  // endregion before update method
 
 }

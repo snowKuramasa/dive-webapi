@@ -130,40 +130,40 @@ public class TMessage {
 
   // region getter/setter
 
-    /**message id getter*/
-    public Integer getMessageId() { return this.messageId; }
-    /**message id setter*/
-    public void setMessageId(Integer id) { this.messageId = id; }
+    // /**message id getter*/
+    // public Integer getMessageId() { return this.messageId; }
+    // /**message id setter*/
+    // public void setMessageId(Integer id) { this.messageId = id; }
 
-    /**message message getter*/
-    public String getMessage() { return this.message; }
-    /**message message setter*/
-    public void setMessage(String message) { this.message = message; }
+    // /**message message getter*/
+    // public String getMessage() { return this.message; }
+    // /**message message setter*/
+    // public void setMessage(String message) { this.message = message; }
 
-    /**message createTime getter*/
-    public Date getCreateTime() { return this.createTime; }
-    /**message createTime setter*/
-    public void setCreateTime(Date createTime) { this.createTime = createTime; }
+    // /**message createTime getter*/
+    // public Date getCreateTime() { return this.createTime; }
+    // /**message createTime setter*/
+    // public void setCreateTime(Date createTime) { this.createTime = createTime; }
 
-    /**message modifyTime getter*/
-    public Date getModifyTime() { return this.modifyTime; }
-    /**message modifyTime setter*/
-    public void setModifyTime(Date modifyTime) { this.modifyTime = modifyTime; }
+    // /**message modifyTime getter*/
+    // public Date getModifyTime() { return this.modifyTime; }
+    // /**message modifyTime setter*/
+    // public void setModifyTime(Date modifyTime) { this.modifyTime = modifyTime; }
 
-    /**message senderUser getter*/
-    public TUser getSenderUser() { return this.senderUser; }
-    /**message senderUser setter*/
-    public void setSenderUser(TUser senderUser) { this.senderUser = senderUser; }
+    // /**message senderUser getter*/
+    // public TUser getSenderUser() { return this.senderUser; }
+    // /**message senderUser setter*/
+    // public void setSenderUser(TUser senderUser) { this.senderUser = senderUser; }
 
-    /**message receiverUser getter*/
-    public TUser getReceiverUser() { return this.receiverUser; }
-    /**message receiverUser setter*/
-    public void setReceiverUser(TUser receiverUser) { this.receiverUser = receiverUser; }
+    // /**message receiverUser getter*/
+    // public TUser getReceiverUser() { return this.receiverUser; }
+    // /**message receiverUser setter*/
+    // public void setReceiverUser(TUser receiverUser) { this.receiverUser = receiverUser; }
 
-    /**message belongToRoom getter*/
-    public TRoom getBelongToRoom() { return this.belongToRoom; }
-    /**message belongToRoom setter*/
-    public void setBelongToRoom(TRoom belongToRoom) { this.belongToRoom = belongToRoom; }
+    // /**message belongToRoom getter*/
+    // public TRoom getBelongToRoom() { return this.belongToRoom; }
+    // /**message belongToRoom setter*/
+    // public void setBelongToRoom(TRoom belongToRoom) { this.belongToRoom = belongToRoom; }
 
       // endregion getter/setter
 

@@ -1,6 +1,7 @@
 package com.dive.divewebapi.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -13,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 
@@ -144,4 +147,59 @@ public class TRoom {
   private Set<TUserRoomRelation> userRoomRelations;
 
   // endregion relation
+
+  // region getter/setter
+  //*Use Lombok @Getter,@Setter
+
+    // /**room id getter*/
+    // public Integer getRoomId() { return this.roomId; }
+    // /**room id setter*/
+    // public void setRoomId(Integer id) { this.roomId = id; }
+
+    // /**thumbnail getter*/
+    // public TImage getThumbnail() { return this.thumbnail; }
+    // /**thumbnail setter*/
+    // public void setThumbnail(TImage thumbnail) { this.thumbnail = thumbnail; }
+
+    // /**roomCreater getter*/
+    // public TUser getRoomCreater() { return this.roomCreater; }
+    // /**roomCreater setter*/
+    // public void setRoomCreater(TUser roomCreater) { this.roomCreater = roomCreater; }
+
+    // /**roomName getter*/
+    // public String getRoomName() { return this.roomName; }
+    // /**roomName setter*/
+    // public void setRoomName(String roomName) { this.roomName = roomName; }
+
+    // /**roomDescription getter*/
+    // public String getRoomDescription() { return this.roomDescription; }
+    // /**roomDescription setter*/
+    // public void setRoomDescription(String roomDescription) { this.roomDescription = roomDescription; }
+
+    // /**message createTime getter*/
+    // public Date getCreateTime() { return this.createTime; }
+    // /**message createTime setter*/
+    // public void setCreateTime(Date createTime) { this.createTime = createTime; }
+
+    // /**message modifyTime getter*/
+    // public Date getModifyTime() { return this.modifyTime; }
+    // /**message modifyTime setter*/
+    // public void setModifyTime(Date modifyTime) { this.modifyTime = modifyTime; }
+
+    // endregion getter/setter
+
+  // region before save method
+    @PrePersist
+    public void onPrePersist() {
+      setCreateTime(new Date());
+      setModifyTime(new Date());
+    }
+  // endregion before save method
+
+  // region before update method
+  @PreUpdate
+    public void onPreUpdate() {
+      setModifyTime(new Date());
+    }
+  // endregion before update method
 }
