@@ -35,21 +35,19 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TUser {
-  // region id column---
+  //#region id column---
   /**
    * User ID.
    * @PrimaryKey
    */
   @Id
   @GeneratedValue
-  @Column(
-    name = "user_id"
-  )
+  @Column(name = "user_id")
   private Integer userId;
 
-  // endregion id column---
+  //#endregion id column---
 
-  // region mail column---
+  //#region mail column---
   /**
    * User user_mail.
    */
@@ -59,9 +57,9 @@ public class TUser {
   )
   private String userMail;
 
-  // endregion user_mail column---
+  //#endregion user_mail column---
 
-  // region user_password column---
+  //#region user_password column---
   /**
    * User password.
    */
@@ -71,9 +69,9 @@ public class TUser {
   )
   private String userPassword;
 
-  // endregion user_password column---
+  //#endregion user_password column---
 
-  // region user_name column---
+  //#region user_name column---
   /**
    * User name.
    * The name used in the app.
@@ -84,9 +82,9 @@ public class TUser {
   )
   private String userName;
 
-  // endregion user_name column---
+  //#endregion user_name column---
 
-  // region user_profile column---
+  //#region user_profile column---
   /**
    * User profile.
    * User profile statement.
@@ -97,9 +95,9 @@ public class TUser {
   )
   private String userProfile;
 
-  // endregion user_profile column---
+  //#endregion user_profile column---
 
-  // region deleted column---
+  //#region deleted column---
   /**
    * Deleted status.
    * User delete status.
@@ -111,9 +109,9 @@ public class TUser {
   )
   private int deleted;
 
-  // endregion deleted column---
+  //#endregion deleted column---
 
-  // region role column---
+  //#region role column---
   /**
    * User role.
    * Roletype
@@ -123,50 +121,48 @@ public class TUser {
     name = "role",
     nullable = false
   )
-  private String role;
+  private Integer role;
 
-  // endregion role column---
+  //#endregion role column---
 
-  // region create_time column---
+  //#region create_time column---
   /**
    * Created date.
    * User creation date.
    */
-  @Column(
-    name = "create_time"
-  )
+  @Column(name = "create_time")
   private Date createTime;
 
-  // endregion create_time column---
+  //#endregion create_time column---
 
 
-  // region last_login_time column---
+  //#region last_login_time column---
   /**
    * Created date.
    * User creation date.
    */
   @Column(
     name = "last_login_time",
-    // TODO:ログイン時に更新するような処理にしてnullableを外す
-    nullable = false
+    // TODO:ログイン時に更新するような処理にする
+    nullable = true
   )
   private Date lastLoginTime;
 
-  // endregion last_login_time column---
+  //#endregion last_login_time column---
 
-  // region modify_time column---
+  //#region modify_time column---
   /**
    * Modify date.
    * User update date.
    */
-  @Column(
-    name = "modify_time"
-  )
+  @Column(name = "modify_time")
   private Date modifyTime;
 
-  // endregion modify_time column---
+  //#endregion modify_time column---
 
-  // region sender_id column---
+  //#region External reference key
+
+  //#region sender_id column---
   /**
    * Sender's ID.
    * Message sended user ID.
@@ -178,9 +174,9 @@ public class TUser {
   )
   private List<TMessage> sendMessageList;
 
-  // endregion sender_id column---
+  //#endregion sender_id column---
 
-  // region receiver_id column---
+  //#region receiver_id column---
   /**
    * Receiver's ID.
    * Message received user ID.
@@ -192,9 +188,9 @@ public class TUser {
   )
   private List<TMessage> receiverMessageList;
 
-  // endregion receiver_id column---
+  //#endregion receiver_id column---
 
-  // region room_creater_id column---
+  //#region room_creater_id column---
   /**
    * room creater.
    * room creater ID.
@@ -206,9 +202,9 @@ public class TUser {
   )
   private List<TRoom> roomCreaterList;
 
-  // endregion room_creater_id column---
+  //#endregion room_creater_id column---
 
-  // region icon_id column---
+  //#region icon_id column---
   /**
    * user icon.
    * user icon ID.
@@ -221,9 +217,11 @@ public class TUser {
   )
   private TImage icon;
 
-  // endregion icon_id column---
+  //#endregion icon_id column---
 
-  // region relation
+  //#endregion External reference key
+
+  //#region relation
 
   @OneToMany(mappedBy = "userMessageFavoriteId.user", cascade = CascadeType.ALL)
     private Set<TFavorite> favorites;
@@ -240,75 +238,76 @@ public class TUser {
   @OneToMany(mappedBy = "userUserFollowId.follower", cascade = CascadeType.ALL)
     private Set<TFollow> followers;
 
-  // endregion relation
+  //#endregion relation
 
-  // region getter/setter
+  //#region getter/setter
 
-    /**user id getter*/
-    public Integer getUserId() { return this.userId; }
-    /**user id setter*/
-    public void setUserId(Integer id) { this.userId = id; }
+    // /**user id getter*/
+    // public Integer getUserId() { return this.userId; }
+    // /**user id setter*/
+    // public void setUserId(Integer id) { this.userId = id; }
 
-    /**user mail getter*/
-    public String getUserMail() { return this.userMail; }
-    /**user mail setter*/
-    public void setUserMail(String mail) { this.userMail = mail; }
+    // /**user mail getter*/
+    // public String getUserMail() { return this.userMail; }
+    // /**user mail setter*/
+    // public void setUserMail(String mail) { this.userMail = mail; }
 
-    /**user password getter*/
-    public String getUserPassword() { return this.userPassword; }
-    /**user password setter*/
-    public void setUserPassword(String password) { this.userPassword = password; }
+    // /**user password getter*/
+    // public String getUserPassword() { return this.userPassword; }
+    // /**user password setter*/
+    // public void setUserPassword(String password) { this.userPassword = password; }
 
-    /**user name getter*/
-    public String getUserName() { return this.userName; }
-    /**user name setter*/
-    public void setUserName(String name) { this.userName = name; }
+    // /**user name getter*/
+    // public String getUserName() { return this.userName; }
+    // /**user name setter*/
+    // public void setUserName(String name) { this.userName = name; }
 
-    /**user profile getter*/
-    public String getUserProfile() { return this.userProfile; }
-    /**user profile setter*/
-    public void setUserProfile(String profile) { this.userProfile = profile; }
+    // /**user profile getter*/
+    // public String getUserProfile() { return this.userProfile; }
+    // /**user profile setter*/
+    // public void setUserProfile(String profile) { this.userProfile = profile; }
 
-    /**user deleted getter*/
-    public int getDeleted() { return this.deleted; }
-    /**user deleted setter*/
-    public void setDeleted(int deleteFrag) { this.deleted = deleteFrag; }
+    // /**user deleted getter*/
+    // public int getDeleted() { return this.deleted; }
+    // /**user deleted setter*/
+    // public void setDeleted(int deleteFrag) { this.deleted = deleteFrag; }
 
-    /**user role getter*/
-    public String getRole() { return this.role; }
-    /**user role setter*/
-    public void setRole(String role) { this.role = role; }
+    // /**user role getter*/
+    // public Integer getRole() { return this.role; }
+    // /**user role setter*/
+    // public void setRole(Integer role) { this.role = role; }
 
-    /**user createTime getter*/
-    public Date getCreateTime() { return this.createTime; }
-    /**user createTime setter*/
-    public void setCreateTime(Date createTime) { this.createTime = createTime; }
+    // /**user createTime getter*/
+    // public Date getCreateTime() { return this.createTime; }
+    // /**user createTime setter*/
+    // public void setCreateTime(Date createTime) { this.createTime = createTime; }
 
-    /**user lastLoginTime getter*/
-    public Date getLastLoginTime() { return this.lastLoginTime; }
-    /**user lastLoginTime setter*/
-    public void setLastLoginTime(Date lastLoginTime) { this.lastLoginTime = lastLoginTime; }
+    // /**user lastLoginTime getter*/
+    // public Date getLastLoginTime() { return this.lastLoginTime; }
+    // /**user lastLoginTime setter*/
+    // public void setLastLoginTime(Date lastLoginTime) { this.lastLoginTime = lastLoginTime; }
 
-    /**user modifyTime getter*/
-    public Date getModifyTime() { return this.modifyTime; }
-    /**user modifyTime setter*/
-    public void setModifyTime(Date modifyTime) { this.modifyTime = modifyTime; }
+    // /**user modifyTime getter*/
+    // public Date getModifyTime() { return this.modifyTime; }
+    // /**user modifyTime setter*/
+    // public void setModifyTime(Date modifyTime) { this.modifyTime = modifyTime; }
 
-  // endregion getter/setter
+  //#endregion getter/setter
 
-  // region before save method
+  //#region before save method
   @PrePersist
     public void onPrePersist() {
+      setDeleted(0);
       setCreateTime(new Date());
       setModifyTime(new Date());
     }
-  // endregion before save method
+  //#endregion before save method
 
-  // region before update method
+  //#region before update method
   @PreUpdate
     public void onPreUpdate() {
       setModifyTime(new Date());
     }
-  // endregion before update method
+  //#endregion before update method
 
 }

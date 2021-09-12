@@ -67,18 +67,15 @@ public class MessageController {
     Integer messageId = Integer.parseInt(id);
 
     try {
-      // get TMessage entity
-      Optional<TMessage> messageOptionalEntity = messageService.getById(messageId);
-
-      TMessage getedMessageEntity = messageOptionalEntity.get();
+      //get TMessage entity
+      TMessage messageEntity = messageService.getById(messageId).get();
 
       MessageResponse messageResponse = new MessageResponse(
-                                          getedMessageEntity.getSenderUser(),
-                                          getedMessageEntity.getReceiverUser(),
-                                          getedMessageEntity
+                                          messageEntity.getSenderUser(),
+                                          messageEntity.getReceiverUser(),
+                                          messageEntity
                                         );
 
-      //TODO:Return response status code 201(created)
       return ResponseEntity.ok(messageResponse);
 
     } catch (MessageNotFoundException e) {
@@ -137,17 +134,17 @@ public class MessageController {
 
     try {
       //JPA Entity
-      TMessage saveMessageEntity = new TMessage();
+      TMessage messageEntity = new TMessage();
 
       //set request body
       TUser senderUser = userService.getById(message.getSenderUserId()).get();
       TUser receiverUser = userService.getById(message.getReceiverUserId()).get();
 
-      saveMessageEntity.setMessage(message.getMessage());
-      saveMessageEntity.setSenderUser(senderUser);
-      saveMessageEntity.setReceiverUser(receiverUser);
+      messageEntity.setMessage(message.getMessage());
+      messageEntity.setSenderUser(senderUser);
+      messageEntity.setReceiverUser(receiverUser);
 
-      TMessage savedMessageEntity = messageService.save(saveMessageEntity);
+      TMessage savedMessageEntity = messageService.save(messageEntity);
 
       MessageResponse messageResponse = new MessageResponse(
                                           savedMessageEntity.getSenderUser(),
@@ -156,7 +153,7 @@ public class MessageController {
                                         );
 
       //Create path for saved messages.
-      //Expected "api/messages/{messageI}"
+      //Expected "api/messages/{messageId}"
       URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri() //->Expected api/messages
                 .path("/{id}")                                      //->Expected api/messages/{messageId}
                 .buildAndExpand(messageResponse.getMessageId())     //->Expected insert messageId
@@ -184,13 +181,13 @@ public class MessageController {
     try {
 
       //get TMessage entity
-      TMessage updateMessageEntity = messageService.getById(messageId).get();
+      TMessage messageEntity = messageService.getById(messageId).get();
 
       //set request body
-      updateMessageEntity.setMessage(message.getMessage());
+      messageEntity.setMessage(message.getMessage());
 
       //save entity
-      TMessage updatedMessageEntity = messageService.update(updateMessageEntity);
+      TMessage updatedMessageEntity = messageService.update(messageEntity);
 
 
       MessageResponse messageResponse = new MessageResponse(
@@ -216,11 +213,10 @@ public class MessageController {
     Integer messageId = Integer.parseInt(id);
 
     try {
-      Optional<TMessage> messageEntity = messageService.getById(messageId);
+      //get TMessage entity
+      TMessage messageEntity = messageService.getById(messageId).get();
 
-      TMessage deleteMessageEntity = messageEntity.get();
-
-      TMessage deletedMessageEntity = messageService.delete(deleteMessageEntity);
+      TMessage deletedMessageEntity = messageService.delete(messageEntity);
 
 
       MessageResponse messageResponse = new MessageResponse(

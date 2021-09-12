@@ -70,16 +70,14 @@ public class RoomController {
     Integer roomId = Integer.parseInt(id);
 
     try {
-      // get TRoom entity
-      Optional<TRoom> roomOptionalEntity = roomService.getById(roomId);
-
-      TRoom getedRoomEntity = roomOptionalEntity.get();
+      //get TRoom entity
+      TRoom roomEntity = roomService.getById(roomId).get();
 
       //TODO:リクエスト時の画像アップロードの処理が改善されるまではコメントアウトしておく
       RoomResponse roomResponse = new RoomResponse(
-                                          getedRoomEntity.getRoomCreater(),
-                                          // getedRoomEntity.getThumbnail(),
-                                          getedRoomEntity
+                                          roomEntity.getRoomCreater(),
+                                          // roomEntity.getThumbnail(),
+                                          roomEntity
                                         );
 
       return ResponseEntity.ok(roomResponse);
@@ -140,21 +138,21 @@ public class RoomController {
 
     try {
       //JPA Entity
-      TRoom saveRoomEntity = new TRoom();
+      TRoom roomEntity = new TRoom();
 
       //set request body
       TUser roomCreater = userService.getById(room.getRoomCreaterId()).get();
       //TODO:ImageService 追加後にコメント外す
       // TImage thumbnail  = imageService.getById(room.getThumbnailId()).get();
 
-      saveRoomEntity.setRoomName(room.getRoomName());
-      saveRoomEntity.setRoomDescription(room.getRoomDescription());
-      saveRoomEntity.setRoomCreater(roomCreater);
+      roomEntity.setRoomName(room.getRoomName());
+      roomEntity.setRoomDescription(room.getRoomDescription());
+      roomEntity.setRoomCreater(roomCreater);
       //TODO:ImageService 追加後にコメント外す
-      // saveRoomEntity.setThumbnail(thumbnail);
+      // roomEntity.setThumbnail(thumbnail);
 
       //Get saved target
-      TRoom savedRoomEntity = roomService.save(saveRoomEntity);
+      TRoom savedRoomEntity = roomService.save(roomEntity);
 
       //Create respose
       //TODO:リクエスト時の画像アップロードの処理が改善されるまではコメントアウトしておく
@@ -193,14 +191,14 @@ public class RoomController {
     try {
 
       //get TRoom entity
-      TRoom updateRoomEntity = roomService.getById(roomId).get();
+      TRoom roomEntity = roomService.getById(roomId).get();
 
       //set request body
-      updateRoomEntity.setRoomName(room.getRoomName());
-      updateRoomEntity.setRoomDescription(room.getRoomDescription());
+      roomEntity.setRoomName(room.getRoomName());
+      roomEntity.setRoomDescription(room.getRoomDescription());
 
       //save entity
-      TRoom updatedRoomEntity = roomService.update(updateRoomEntity);
+      TRoom updatedRoomEntity = roomService.update(roomEntity);
 
 
       //TODO:リクエスト時の画像アップロードの処理が改善されるまではコメントアウトしておく
@@ -227,11 +225,10 @@ public class RoomController {
     Integer roomId = Integer.parseInt(id);
 
     try {
-      Optional<TRoom> roomEntity = roomService.getById(roomId);
+      //get TRoom entity
+      TRoom roomEntity = roomService.getById(roomId).get();
 
-      TRoom deleteRoomEntity = roomEntity.get();
-
-      TRoom deletedRoomEntity = roomService.delete(deleteRoomEntity);
+      TRoom deletedRoomEntity = roomService.delete(roomEntity);
 
       //TODO:リクエスト時の画像アップロードの処理が改善されるまではコメントアウトしておく
       RoomResponse roomResponse = new RoomResponse(

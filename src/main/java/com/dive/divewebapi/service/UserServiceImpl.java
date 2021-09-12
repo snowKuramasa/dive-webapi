@@ -21,7 +21,7 @@ UserRepository userRepository;
    */
   @Override
   public List<TUser> getAll() throws UserNotFoundException {
-    List<TUser> users = userRepository.findAll();
+    List<TUser> users = userRepository.findByDeleted(0); //deleted = 0 only
 
     if(users.size() == 0) throw new UserNotFoundException();
 

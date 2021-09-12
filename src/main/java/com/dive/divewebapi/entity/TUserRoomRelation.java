@@ -1,6 +1,6 @@
 package com.dive.divewebapi.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -74,25 +76,18 @@ public class TUserRoomRelation {
   // endregion modify_time column---
 
 
-  public void setUserRoomRelationId(UserRoomRelationId userRoomRelationId) {
-      this.userRoomRelationId = userRoomRelationId;
-  }
+  // region before save method
+  @PrePersist
+    public void onPrePersist() {
+      setCreateTime(new Date());
+      setModifyTime(new Date());
+    }
+  // endregion before save method
 
-  @Transient
-  public TUser getUser() {
-      return getUserRoomRelationId().getUser();
-  }
-
-  public void setUser(TUser user) {
-    getUserRoomRelationId().setUser(user);
-  }
-
-  @Transient
-  public TRoom getRoom() {
-      return getUserRoomRelationId().getRoom();
-  }
-
-  public void setRoom(TRoom room) {
-    getUserRoomRelationId().setRoom(room);
-  }
+  // region before update method
+  @PreUpdate
+    public void onPreUpdate() {
+      setModifyTime(new Date());
+    }
+  // endregion before update method
 }
