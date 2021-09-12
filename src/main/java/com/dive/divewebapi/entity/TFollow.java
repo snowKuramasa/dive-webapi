@@ -1,6 +1,6 @@
 package com.dive.divewebapi.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -96,4 +98,19 @@ public class TFollow {
   public void setFollower(TUser follower) {
     getUserUserFollowId().setFollower(follower);
   }
+
+  // region before save method
+  @PrePersist
+    public void onPrePersist() {
+      setCreateTime(new Date());
+      setModifyTime(new Date());
+    }
+  // endregion before save method
+
+  // region before update method
+  @PreUpdate
+    public void onPreUpdate() {
+      setModifyTime(new Date());
+    }
+  // endregion before update method
 }

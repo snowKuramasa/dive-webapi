@@ -123,7 +123,7 @@ public class TUser {
     name = "role",
     nullable = false
   )
-  private String role;
+  private Integer role;
 
   // endregion role column---
 
@@ -244,55 +244,55 @@ public class TUser {
 
   // region getter/setter
 
-    /**user id getter*/
-    public Integer getUserId() { return this.userId; }
-    /**user id setter*/
-    public void setUserId(Integer id) { this.userId = id; }
+    // /**user id getter*/
+    // public Integer getUserId() { return this.userId; }
+    // /**user id setter*/
+    // public void setUserId(Integer id) { this.userId = id; }
 
-    /**user mail getter*/
-    public String getUserMail() { return this.userMail; }
-    /**user mail setter*/
-    public void setUserMail(String mail) { this.userMail = mail; }
+    // /**user mail getter*/
+    // public String getUserMail() { return this.userMail; }
+    // /**user mail setter*/
+    // public void setUserMail(String mail) { this.userMail = mail; }
 
-    /**user password getter*/
-    public String getUserPassword() { return this.userPassword; }
-    /**user password setter*/
-    public void setUserPassword(String password) { this.userPassword = password; }
+    // /**user password getter*/
+    // public String getUserPassword() { return this.userPassword; }
+    // /**user password setter*/
+    // public void setUserPassword(String password) { this.userPassword = password; }
 
-    /**user name getter*/
-    public String getUserName() { return this.userName; }
-    /**user name setter*/
-    public void setUserName(String name) { this.userName = name; }
+    // /**user name getter*/
+    // public String getUserName() { return this.userName; }
+    // /**user name setter*/
+    // public void setUserName(String name) { this.userName = name; }
 
-    /**user profile getter*/
-    public String getUserProfile() { return this.userProfile; }
-    /**user profile setter*/
-    public void setUserProfile(String profile) { this.userProfile = profile; }
+    // /**user profile getter*/
+    // public String getUserProfile() { return this.userProfile; }
+    // /**user profile setter*/
+    // public void setUserProfile(String profile) { this.userProfile = profile; }
 
-    /**user deleted getter*/
-    public int getDeleted() { return this.deleted; }
-    /**user deleted setter*/
-    public void setDeleted(int deleteFrag) { this.deleted = deleteFrag; }
+    // /**user deleted getter*/
+    // public int getDeleted() { return this.deleted; }
+    // /**user deleted setter*/
+    // public void setDeleted(int deleteFrag) { this.deleted = deleteFrag; }
 
-    /**user role getter*/
-    public String getRole() { return this.role; }
-    /**user role setter*/
-    public void setRole(String role) { this.role = role; }
+    // /**user role getter*/
+    // public Integer getRole() { return this.role; }
+    // /**user role setter*/
+    // public void setRole(Integer role) { this.role = role; }
 
-    /**user createTime getter*/
-    public Date getCreateTime() { return this.createTime; }
-    /**user createTime setter*/
-    public void setCreateTime(Date createTime) { this.createTime = createTime; }
+    // /**user createTime getter*/
+    // public Date getCreateTime() { return this.createTime; }
+    // /**user createTime setter*/
+    // public void setCreateTime(Date createTime) { this.createTime = createTime; }
 
-    /**user lastLoginTime getter*/
-    public Date getLastLoginTime() { return this.lastLoginTime; }
-    /**user lastLoginTime setter*/
-    public void setLastLoginTime(Date lastLoginTime) { this.lastLoginTime = lastLoginTime; }
+    // /**user lastLoginTime getter*/
+    // public Date getLastLoginTime() { return this.lastLoginTime; }
+    // /**user lastLoginTime setter*/
+    // public void setLastLoginTime(Date lastLoginTime) { this.lastLoginTime = lastLoginTime; }
 
-    /**user modifyTime getter*/
-    public Date getModifyTime() { return this.modifyTime; }
-    /**user modifyTime setter*/
-    public void setModifyTime(Date modifyTime) { this.modifyTime = modifyTime; }
+    // /**user modifyTime getter*/
+    // public Date getModifyTime() { return this.modifyTime; }
+    // /**user modifyTime setter*/
+    // public void setModifyTime(Date modifyTime) { this.modifyTime = modifyTime; }
 
   // endregion getter/setter
 

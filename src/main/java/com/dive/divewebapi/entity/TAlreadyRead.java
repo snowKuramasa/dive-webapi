@@ -1,6 +1,6 @@
 package com.dive.divewebapi.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.AssociationOverride;
 import javax.persistence.AssociationOverrides;
@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -50,9 +52,9 @@ public class TAlreadyRead {
   //リレーションのために定義
   //外部のテーブルとキーを指定
   @Id
-  public UserMessageAlreadyReadId getUserMessageAlreadyReadId() {
+    public UserMessageAlreadyReadId getUserMessageAlreadyReadId() {
       return userMessageAlreadyReadId;
-  }
+    }
   // endregion user_message_already_read_id column---
 
   // region create_time column---
@@ -60,7 +62,7 @@ public class TAlreadyRead {
    * Created date.
    */
   @Column(nullable = false)
-  private Date createTime;
+    private Date createTime;
 
   // endregion create_time column---
 
@@ -69,16 +71,16 @@ public class TAlreadyRead {
    * Modify date.
    */
   @Column(nullable = false)
-  private Date modifyTime;
+    private Date modifyTime;
 
   // endregion modify_time column---
 
 
-  public void setUserMessageAlreadyReadId(UserMessageAlreadyReadId userMessageAlreadyReadId) {
+    public void setUserMessageAlreadyReadId(UserMessageAlreadyReadId userMessageAlreadyReadId) {
       this.userMessageAlreadyReadId = userMessageAlreadyReadId;
-  }
+    }
 
-  @Transient
+@Transient
   public TUser getUser() {
       return getUserMessageAlreadyReadId().getUser();
   }
@@ -87,7 +89,7 @@ public class TAlreadyRead {
     getUserMessageAlreadyReadId().setUser(user);
   }
 
-  @Transient
+@Transient
   public TMessage getMessage() {
       return getUserMessageAlreadyReadId().getMessage();
   }
@@ -95,4 +97,19 @@ public class TAlreadyRead {
   public void setMessage(TMessage message) {
     getUserMessageAlreadyReadId().setMessage(message);
   }
+
+  // region before save method
+  @PrePersist
+    public void onPrePersist() {
+      setCreateTime(new Date());
+      setModifyTime(new Date());
+  }
+  // endregion before save method
+
+  // region before update method
+  @PreUpdate
+    public void onPreUpdate() {
+      setModifyTime(new Date());
+    }
+  // endregion before update method
 }
