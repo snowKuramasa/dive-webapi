@@ -1,5 +1,7 @@
 package com.dive.divewebapi.repository;
 
+import java.util.List;
+
 import com.dive.divewebapi.entity.TUser;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +17,5 @@ public interface UserRepository extends JpaRepository<TUser, Integer> {
   //save
   //delete
   //Jparepositoryで定義されていないような検索や処理はJPQLでクエリを定義して対応する
-
+  List<TUser> findByDeleted(Integer notDeleted);
 }

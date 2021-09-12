@@ -1,10 +1,14 @@
 package com.dive.divewebapi.controller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import com.dive.divewebapi.entity.TUser;
 import com.dive.divewebapi.exception.UserNotSaveException;
+import com.dive.divewebapi.requestBody.UserRequest;
+import com.dive.divewebapi.response.UserResponse;
+import com.dive.divewebapi.response.UserResponseList;
 import com.dive.divewebapi.exception.UserNotFoundException;
 import com.dive.divewebapi.service.UserServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 
@@ -31,12 +36,14 @@ public class UserController {
 
 
   @GetMapping
-  ResponseEntity<List<TUser>> getUsers() {
+  ResponseEntity<UserResponseList> getUsers() {
 
     try {
       List<TUser> userEntityList = userService.getAll();
 
-      return ResponseEntity.ok(userEntityList);
+      UserResponseList userResponseList = new UserResponseList(userEntityList);
+
+      return ResponseEntity.ok(userResponseList);
 
     } catch (UserNotFoundException e) {
 
@@ -48,16 +55,17 @@ public class UserController {
   }
 
   @GetMapping("/{id}")
-  ResponseEntity<Optional<TUser>> getUsersById(@PathVariable String id) {
+  ResponseEntity<UserResponse> getUsersById(@PathVariable String id) {
 
     Integer userId = Integer.parseInt(id);
 
     try {
-      // get TUser entity
-      Optional<TUser> userEntity = userService.getById(userId);
+      //get TUser entity
+      TUser userEntity = userService.getById(userId).get();
 
-      //TODO:Return response status code 201(created)
-      return ResponseEntity.ok(userEntity);
+      UserResponse userResponse = new UserResponse(userEntity);
+
+      return ResponseEntity.ok(userResponse);
 
     } catch (UserNotFoundException e) {
 
@@ -69,13 +77,30 @@ public class UserController {
   }
 
   @PostMapping
-  ResponseEntity<TUser> postUser(@RequestBody TUser user) {
+  ResponseEntity<UserResponse> postUser(@RequestBody UserRequest user) {
 
     try {
+      //JPA Entity
+      TUser saveUserEntity = new TUser();
 
       //save request body
-      TUser savedUserEntity = userService.save(user);
-      return ResponseEntity.ok(savedUserEntity);
+      saveUserEntity.setUserMail(user.getUserMail());
+      saveUserEntity.setUserPassword(user.getUserPassword());
+      saveUserEntity.setUserName(user.getUserName());
+      saveUserEntity.setRole(user.getRole());
+
+      TUser savedUserEntity = userService.save(saveUserEntity);
+
+      UserResponse userResponse = new UserResponse(savedUserEntity);
+
+      //Create path for saved users.
+      //Expected "api/users/{userId}"
+      URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri() //->Expected api/users
+                .path("/{id}")                                      //->Expected api/users/{userId}
+                .buildAndExpand(userResponse.getUserId())           //->Expected insert userId
+                .toUri();
+
+      return ResponseEntity.created(uri).body(userResponse);
 
     } catch (UserNotSaveException e) {
 
@@ -87,29 +112,30 @@ public class UserController {
   }
 
   @PutMapping("/{id}")
-  ResponseEntity<TUser> putUser(
+  ResponseEntity<UserResponse> putUser(
     @PathVariable String id,
-    @RequestBody TUser user
+    @RequestBody UserRequest user
   ) throws UserNotSaveException {
 
     Integer userId = Integer.parseInt(id);
 
     try {
-      Optional<TUser> userEntity = userService.getById(userId);
-
-      //get TUser entity
-      TUser updateUserEntity = userEntity.get();
+       //get TUser entity
+       TUser userEntity = userService.getById(userId).get();
 
       //set request body
-      updateUserEntity.setUserName(user.getUserName());
-      updateUserEntity.setUserMail(user.getUserMail());
-      updateUserEntity.setUserPassword(user.getUserPassword());
-      updateUserEntity.setUserProfile(user.getUserProfile());
+      userEntity.setUserName(user.getUserName());
+      userEntity.setUserMail(user.getUserMail());
+      userEntity.setUserPassword(user.getUserPassword());
+      userEntity.setUserProfile(user.getUserProfile());
+      userEntity.setRole(user.getRole());
 
       //save entity
-      TUser updatedUser = userService.update(updateUserEntity);
+      TUser updatedUserEntity = userService.update(userEntity);
 
-      return ResponseEntity.ok(updatedUser);
+      UserResponse userResponse = new UserResponse(updatedUserEntity);
+
+      return ResponseEntity.ok(userResponse);
 
     } catch (UserNotFoundException e) {
 
@@ -121,18 +147,19 @@ public class UserController {
   }
 
   @DeleteMapping("/{id}")
-  ResponseEntity<TUser> deleteUser(@PathVariable String id) {
+  ResponseEntity<UserResponse> deleteUser(@PathVariable String id) {
 
     Integer userId = Integer.parseInt(id);
 
     try {
-      Optional<TUser> userEntity = userService.getById(userId);
+      //get TUser entity
+      TUser userEntity = userService.getById(userId).get();
 
-      TUser deleteUserEntity = userEntity.get();
+      TUser deletedUserEntity = userService.delete(userEntity);
 
-      TUser deletedUserEntity = userService.delete(deleteUserEntity);
+      UserResponse userResponse = new UserResponse(deletedUserEntity);
 
-      return ResponseEntity.ok(deletedUserEntity);
+      return ResponseEntity.ok(userResponse);
 
     } catch (UserNotFoundException e) {
 

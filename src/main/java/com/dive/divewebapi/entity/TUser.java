@@ -143,8 +143,8 @@ public class TUser {
    */
   @Column(
     name = "last_login_time",
-    // TODO:ログイン時に更新するような処理にしてnullableを外す
-    nullable = false
+    // TODO:ログイン時に更新するような処理にする
+    nullable = true
   )
   private Date lastLoginTime;
 
@@ -297,6 +297,7 @@ public class TUser {
   //#region before save method
   @PrePersist
     public void onPrePersist() {
+      setDeleted(0);
       setCreateTime(new Date());
       setModifyTime(new Date());
     }
