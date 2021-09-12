@@ -24,7 +24,7 @@ public interface RoomService {
 
   public List<TRoom> getByRoomCreaterId(Integer createrId) throws RoomNotFoundException;
 
-  public List<TRoom> getByRoomName(String roomName) throws RoomNotFoundException;
+  public List<TRoom> getByRoomNameContaining(String roomName) throws RoomNotFoundException;
 
   public List<TRoom> getByThumbnailId(Integer thumbnailId) throws RoomNotFoundException;
 

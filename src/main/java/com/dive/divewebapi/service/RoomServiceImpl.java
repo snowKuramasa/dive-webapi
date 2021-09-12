@@ -91,9 +91,9 @@ UserRepository userRepository;
    * get roomName rooms
    */
   @Override
-  public List<TRoom> getByRoomName(String roomName) throws RoomNotFoundException {
+  public List<TRoom> getByRoomNameContaining(String roomName) throws RoomNotFoundException {
 
-    List<TRoom> rooms = roomRepository.findByRoomName(roomName);
+    List<TRoom> rooms = roomRepository.findByRoomNameContaining(roomName);
 
     if(rooms.size() == 0) throw new RoomNotFoundException();
 

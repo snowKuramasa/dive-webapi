@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -64,7 +65,7 @@ public class RoomController {
   }
 
   @GetMapping("/{id}")
-  ResponseEntity<RoomResponse> getRoomById(@PathVariable String id) {
+  ResponseEntity<RoomResponse> getRoomsById(@PathVariable String id) {
 
     Integer roomId = Integer.parseInt(id);
 
@@ -113,25 +114,26 @@ public class RoomController {
     }
   }
 
-  //TODO:部屋名で検索したい↓
-  // @GetMapping("/roomname/{name}")
-  // ResponseEntity<RoomResponseList> getRoomsByReceiverId(@PathVariable String name) {
+  @GetMapping("/roomname")
+  ResponseEntity<RoomResponseList> getRoomsByRoomName(
+    @RequestParam(name = "name") String name
+    ) {
 
-  //   try {
-  //     List<TRoom> roomEntityList = roomService.getByRoomName(name);
+    try {
+      List<TRoom> roomEntityList = roomService.getByRoomNameContaining(name);
 
-  //     RoomResponseList roomResponseList = new RoomResponseList(roomEntityList);
+      RoomResponseList roomResponseList = new RoomResponseList(roomEntityList);
 
-  //     return ResponseEntity.ok(roomResponseList);
+      return ResponseEntity.ok(roomResponseList);
 
-  //   } catch (RoomNotFoundException e) {
+    } catch (RoomNotFoundException e) {
 
-  //     e.setRoom("This room not found.");
-  //     System.err.println(e.getRoom());
+      e.setRoom("This room not found.");
+      System.err.println(e.getRoom());
 
-  //     return ResponseEntity.notFound().build();
-  //   }
-  // }
+      return ResponseEntity.notFound().build();
+    }
+  }
 
   @PostMapping
   ResponseEntity<RoomResponse> postRoom(@RequestBody RoomRequest room) throws UserNotFoundException {

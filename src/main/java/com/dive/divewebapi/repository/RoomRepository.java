@@ -24,8 +24,8 @@ public interface RoomRepository extends JpaRepository<TRoom, Integer> {
   //roomCreater
   List<TRoom> findByRoomCreaterUserId(Integer roomCreaterId);
 
-  //roomName
-  List<TRoom> findByRoomName(String roomName);
+  //roomName(search wild card)
+  List<TRoom> findByRoomNameContaining(String roomName);
 
   //thumbnail
   List<TImage> findByThumbnailImageId(Integer thumbnailId);
