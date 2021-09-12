@@ -48,7 +48,7 @@ public class UserController {
   }
 
   @GetMapping("/{id}")
-  ResponseEntity<Optional<TUser>> getUserById(@PathVariable String id) {
+  ResponseEntity<Optional<TUser>> getUsersById(@PathVariable String id) {
 
     Integer userId = Integer.parseInt(id);
 

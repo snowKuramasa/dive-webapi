@@ -39,35 +39,35 @@ public class MessageResponse {
 
   //#region getter/setter
 
-  /**messageId getter */
-  public Integer getMessageId() {return this.messageId;}
-  /**messageId setter */
-  public void setMessageId(Integer messageId) {this.messageId = messageId;}
+  // /**messageId getter */
+  // public Integer getMessageId() {return this.messageId;}
+  // /**messageId setter */
+  // public void setMessageId(Integer messageId) {this.messageId = messageId;}
 
-  /**message getter */
-  public String getMessage() {return this.message;}
-  /**message setter */
-  public void setMessage(String message) {this.message = message;}
+  // /**message getter */
+  // public String getMessage() {return this.message;}
+  // /**message setter */
+  // public void setMessage(String message) {this.message = message;}
 
-  /**senderUserId getter */
-  public Integer getSenderUserId() {return this.senderUserId;}
-  /**senderUserId setter */
-  public void setSenderUserId(Integer senderUserId) {this.senderUserId = senderUserId;}
+  // /**senderUserId getter */
+  // public Integer getSenderUserId() {return this.senderUserId;}
+  // /**senderUserId setter */
+  // public void setSenderUserId(Integer senderUserId) {this.senderUserId = senderUserId;}
 
-  /**senderUserName getter */
-  public String getSenderUserName() {return this.senderUserName;}
-  /**senderUserName setter */
-  public void setSenderUserName(String senderUserName) {this.senderUserName = senderUserName;}
+  // /**senderUserName getter */
+  // public String getSenderUserName() {return this.senderUserName;}
+  // /**senderUserName setter */
+  // public void setSenderUserName(String senderUserName) {this.senderUserName = senderUserName;}
 
-  /**receiverUserId getter */
-  public Integer getReceiverUserId() {return this.receiverUserId;}
-  /**receiverUserId setter */
-  public void setReceiverUserId(Integer receiverUserId) {this.receiverUserId = receiverUserId;}
+  // /**receiverUserId getter */
+  // public Integer getReceiverUserId() {return this.receiverUserId;}
+  // /**receiverUserId setter */
+  // public void setReceiverUserId(Integer receiverUserId) {this.receiverUserId = receiverUserId;}
 
-  /**receiverUserName getter */
-  public String getReceiverUserName() {return this.receiverUserName;}
-  /**receiverUserName setter */
-  public void setReceiverUserName(String receiverUserName) {this.receiverUserName = receiverUserName;}
+  // /**receiverUserName getter */
+  // public String getReceiverUserName() {return this.receiverUserName;}
+  // /**receiverUserName setter */
+  // public void setReceiverUserName(String receiverUserName) {this.receiverUserName = receiverUserName;}
 
   /**message createTime getter*/
   public String getCreateTime() { return this.createTime; }

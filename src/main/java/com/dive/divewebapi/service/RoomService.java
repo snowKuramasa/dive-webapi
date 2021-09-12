@@ -22,9 +22,9 @@ public interface RoomService {
 
   public TRoom delete(TRoom message);
 
-  public List<TRoom> getByCreaterId(Integer createrId) throws RoomNotFoundException;
+  public List<TRoom> getByRoomCreaterId(Integer createrId) throws RoomNotFoundException;
 
-  public List<TRoom> getByName(Integer createrId) throws RoomNotFoundException;
+  public List<TRoom> getByRoomNameContaining(String roomName) throws RoomNotFoundException;
 
   public List<TRoom> getByThumbnailId(Integer thumbnailId) throws RoomNotFoundException;
 

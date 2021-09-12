@@ -62,7 +62,7 @@ public class MessageController {
   }
 
   @GetMapping("/{id}")
-  ResponseEntity<MessageResponse> getMessageById(@PathVariable String id) {
+  ResponseEntity<MessageResponse> getMessagesById(@PathVariable String id) {
 
     Integer messageId = Integer.parseInt(id);
 

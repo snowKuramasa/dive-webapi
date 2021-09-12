@@ -1,12 +1,5 @@
 package com.dive.divewebapi.requestBody;
 
-import java.util.Optional;
-
-import com.dive.divewebapi.entity.TUser;
-import com.dive.divewebapi.exception.UserNotFoundException;
-import com.dive.divewebapi.service.UserServiceImpl;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MessageRequest {
-  @Autowired
-  UserServiceImpl userService;
 
   private String message;
 
@@ -24,16 +15,11 @@ public class MessageRequest {
   private Integer receiverUserId;
 
 
-  public String getMessage() {
-    return this.message;
-  }
-
-  public Integer getSenderUserId() {
-    return this.senderUserId;
-  }
-
-  public Integer getReceiverUserId() {
-    return this.receiverUserId;
+  public MessageRequest(String message, Integer senderUserId, Integer receiverUser){
+    super();
+    this.setMessage(message);
+    this.setSenderUserId(senderUserId);
+    this.setReceiverUserId(receiverUserId);
   }
 
 }
