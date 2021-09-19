@@ -6,11 +6,11 @@ public class RoomNotFoundException extends Exception{
 
     private String message;
 
-    public void setRoom(String message) {
+    public void setMessage(String message) {
         this.message = message ;
     }
 
-    public String getRoom() {
+    public String getMessage() {
       return this.message;
   }
 

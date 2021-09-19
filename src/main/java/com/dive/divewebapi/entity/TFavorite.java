@@ -78,6 +78,7 @@ public class TFavorite {
     this.UserMessageFavoriteId = userMessageFavoriteId;
   }
 
+//*Not use lombok getter/setter*
 @Transient
   public TUser getUser() {
     return getUserMessageFavoriteId().getUser();

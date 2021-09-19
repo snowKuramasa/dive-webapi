@@ -57,8 +57,8 @@ public class RoomController {
 
     } catch (RoomNotFoundException e) {
 
-      e.setRoom("This room not found.");
-      System.err.println(e.getRoom());
+      e.setMessage("This room not found.");
+      System.err.println(e.getMessage());
 
       return ResponseEntity.notFound().build();
     }
@@ -84,8 +84,8 @@ public class RoomController {
 
     } catch (RoomNotFoundException e) {
 
-      e.setRoom("This room not found.");
-      System.err.println(e.getRoom());
+      e.setMessage("This room not found.");
+      System.err.println(e.getMessage());
 
       return ResponseEntity.notFound().build();
     }
@@ -105,8 +105,8 @@ public class RoomController {
 
     } catch (RoomNotFoundException e) {
 
-      e.setRoom("This room not found.");
-      System.err.println(e.getRoom());
+      e.setMessage("This room not found.");
+      System.err.println(e.getMessage());
 
       return ResponseEntity.notFound().build();
     }
@@ -126,8 +126,8 @@ public class RoomController {
 
     } catch (RoomNotFoundException e) {
 
-      e.setRoom("This room not found.");
-      System.err.println(e.getRoom());
+      e.setMessage("This room not found.");
+      System.err.println(e.getMessage());
 
       return ResponseEntity.notFound().build();
     }
@@ -173,8 +173,8 @@ public class RoomController {
 
     } catch (RoomNotSaveException e) {
 
-      e.setRoom("This room could not saved.");
-      System.err.println(e.getRoom());
+      e.setMessage("This room could not saved.");
+      System.err.println(e.getMessage());
 
       return ResponseEntity.badRequest().build();
     }
@@ -212,8 +212,8 @@ public class RoomController {
 
     } catch (RoomNotFoundException e) {
 
-      e.setRoom("This room not found.");
-      System.err.println(e.getRoom());
+      e.setMessage("This room not found.");
+      System.err.println(e.getMessage());
 
       return ResponseEntity.notFound().build();
     }
@@ -241,8 +241,8 @@ public class RoomController {
 
     } catch (RoomNotFoundException e) {
 
-      e.setRoom("This room not found.");
-      System.err.println(e.getRoom());
+      e.setMessage("This room not found.");
+      System.err.println(e.getMessage());
 
       return ResponseEntity.notFound().build();
     }

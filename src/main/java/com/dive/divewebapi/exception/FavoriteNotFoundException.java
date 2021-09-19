@@ -1,7 +1,7 @@
 package com.dive.divewebapi.exception;
 
-public class RoomNotSaveException extends Exception{
-   //シリアライズ可能なクラスとしてこのフィールドを持つようにすると良い
+public class FavoriteNotFoundException extends Exception{
+    //シリアライズ可能なクラスとしてこのフィールドを持つようにすると良い
     private static final long serialVersionUID = 1L;
 
     private String message;
@@ -13,4 +13,5 @@ public class RoomNotSaveException extends Exception{
     public String getMessage() {
       return this.message;
   }
+
 }
