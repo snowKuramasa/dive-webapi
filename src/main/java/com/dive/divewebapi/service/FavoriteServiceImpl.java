@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.dive.divewebapi.entity.TFavorite;
+import com.dive.divewebapi.entity.TMessage;
 import com.dive.divewebapi.entity.TUser;
 import com.dive.divewebapi.exception.FavoriteNotFoundException;
 import com.dive.divewebapi.exception.FavoriteNotSaveException;
@@ -33,6 +34,52 @@ UserRepository userRepository;
   }
 
   /**
+   * get by user id
+   */
+  @Override
+  public List<TFavorite> getByUserId(Integer userId) throws FavoriteNotFoundException {
+
+
+    List<TFavorite> favorites = favoriteRepository.findByUserMessageFavoriteIdUserUserId(userId);
+
+    if(favorites.size() == 0) throw new FavoriteNotFoundException();
+
+    return favorites;
+  }
+
+    /**
+   * get by message id
+   */
+  @Override
+  public List<TFavorite> getByMessageId(Integer messageId) throws FavoriteNotFoundException {
+
+
+    List<TFavorite> favorites = favoriteRepository.findByUserMessageFavoriteIdMessageMessageId(messageId);
+
+    if(favorites.size() == 0) throw new FavoriteNotFoundException();
+
+    return favorites;
+  }
+
+
+  //FIXME:1兼取得する方法を探す
+  // /**
+  //  * get By userId and messageId
+  //  * @throws FavoriteNotFoundException
+  //  */
+  // @Override
+  // public Optional<TFavorite> getByUserIdMessageId(Integer userId ,Integer messageId) throws FavoriteNotFoundException {
+
+  //   //Get composite key of userId and messageId
+  //   List<TFavorite> favorites = favoriteRepository.findByUserMessageFavoriteIdUserUserId(userId);
+    
+
+  //   if(favorite.isEmpty()) throw new FavoriteNotFoundException();
+
+  //   return favorite;
+  // }
+
+  /**
    * save
    * @throws FavoriteNotSaveException
    */
@@ -49,20 +96,6 @@ UserRepository userRepository;
      favoriteRepository.delete(favorite);
      return favorite;
   };
-
-  /**
-   * get by user id
-   */
-  @Override
-  public List<TFavorite> getByUserId(Integer userId) throws FavoriteNotFoundException {
-
-
-    List<TFavorite> favorites = favoriteRepository.findByUserMessageFavoriteIdUserUserId(userId);
-
-    if(favorites.size() == 0) throw new FavoriteNotFoundException();
-
-    return favorites;
-  }
 
 
 }
