@@ -3,7 +3,6 @@ package com.dive.divewebapi.repository;
 import java.util.List;
 
 import com.dive.divewebapi.entity.TMessage;
-import com.dive.divewebapi.entity.TUser;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
