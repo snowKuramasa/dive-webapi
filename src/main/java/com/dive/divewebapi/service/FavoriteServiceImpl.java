@@ -6,8 +6,11 @@ import java.util.Optional;
 import com.dive.divewebapi.entity.TFavorite;
 import com.dive.divewebapi.entity.TMessage;
 import com.dive.divewebapi.entity.TUser;
+import com.dive.divewebapi.entity.id.UserMessageFavoriteId;
 import com.dive.divewebapi.exception.FavoriteNotFoundException;
 import com.dive.divewebapi.exception.FavoriteNotSaveException;
+import com.dive.divewebapi.exception.MessageNotFoundException;
+import com.dive.divewebapi.exception.UserNotFoundException;
 import com.dive.divewebapi.repository.FavoriteRepository;
 import com.dive.divewebapi.repository.UserRepository;
 
@@ -19,7 +22,15 @@ public class FavoriteServiceImpl implements FavoriteService{
 @Autowired
 FavoriteRepository favoriteRepository;
 
+@Autowired
 UserRepository userRepository;
+
+@Autowired
+MessageServiceImpl messageService;
+
+@Autowired
+UserServiceImpl userService;
+
 
   /**
    * get all favorites
@@ -61,23 +72,35 @@ UserRepository userRepository;
     return favorites;
   }
 
+  /**
+   * get By userId and messageId
+   * @throws FavoriteNotFoundException
+   * @throws UserNotFoundException
+   */
+  @Override
+  public Optional<TFavorite> getByUserIdMessageId(Integer userId ,Integer messageId)
+    throws FavoriteNotFoundException,
+           UserNotFoundException ,
+           MessageNotFoundException {
 
-  //FIXME:1兼取得する方法を探す
-  // /**
-  //  * get By userId and messageId
-  //  * @throws FavoriteNotFoundException
-  //  */
-  // @Override
-  // public Optional<TFavorite> getByUserIdMessageId(Integer userId ,Integer messageId) throws FavoriteNotFoundException {
+    //create compositekey
+    UserMessageFavoriteId userMessageFavoriteId = new UserMessageFavoriteId();
 
-  //   //Get composite key of userId and messageId
-  //   List<TFavorite> favorites = favoriteRepository.findByUserMessageFavoriteIdUserUserId(userId);
-    
+    TUser user = userService.getById(userId).get();
+    TMessage message = messageService.getById(messageId).get();
 
-  //   if(favorite.isEmpty()) throw new FavoriteNotFoundException();
+    //set composite key value
+    userMessageFavoriteId.setUser(user);
+    userMessageFavoriteId.setMessage(message);
 
-  //   return favorite;
-  // }
+    //Get composite key of userId and messageId
+    Optional<TFavorite> favorite = favoriteRepository.findByUserMessageFavoriteId(userMessageFavoriteId);
+
+
+    if(favorite.isEmpty()) throw new FavoriteNotFoundException();
+
+    return favorite;
+  }
 
   /**
    * save

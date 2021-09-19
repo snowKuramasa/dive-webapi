@@ -120,32 +120,29 @@ public class FavoriteController {
     }
   }
 
-  // @DeleteMapping
-  // ResponseEntity<FavoriteResponse> deleteFavorite(@RequestBody FavoriteRequest favorite)
-  // throws UserNotFoundException, MessageNotFoundException {
+  @DeleteMapping
+  ResponseEntity<FavoriteResponse> deleteFavorite(@RequestBody FavoriteRequest favorite)
+  throws UserNotFoundException, MessageNotFoundException {
 
-  //   try {
-  //     //JPA Entity
-  //     TUser favoriteUser = userService.getById(favorite.getUserId()).get();
-  //     TMessage favoriteMessage = messageService.getById(favorite.getMessageId()).get();
+    try {
+      //JPA Entity
+      Integer favoriteUserId = userService.getById(favorite.getUserId()).get().getUserId();
+      Integer favoriteMessageId = messageService.getById(favorite.getMessageId()).get().getMessageId();
 
-  //     TFavorite favoriteEntity = favoriteService.getByUserIdMessageId(
-  //                                                 favoriteUser.getUserId(),
-  //                                                 favoriteMessage.getMessageId()
-  //                                               ).get();
+      TFavorite favoriteEntity = favoriteService.getByUserIdMessageId(favoriteUserId,favoriteMessageId).get();
 
-  //     TFavorite deletedFavoriteEntity = favoriteService.delete(favoriteEntity);
+      TFavorite deletedFavoriteEntity = favoriteService.delete(favoriteEntity);
 
-  //     FavoriteResponse favoriteResponse = new FavoriteResponse(deletedFavoriteEntity);
+      FavoriteResponse favoriteResponse = new FavoriteResponse(deletedFavoriteEntity);
 
-  //     return ResponseEntity.ok(favoriteResponse);
+      return ResponseEntity.ok(favoriteResponse);
 
-  //   } catch (FavoriteNotFoundException e) {
+    } catch (FavoriteNotFoundException e) {
 
-  //     e.setMessage("This favorite not found.");
-  //     System.err.println(e.getMessage());
+      e.setMessage("This favorite not found.");
+      System.err.println(e.getMessage());
 
-  //     return ResponseEntity.badRequest().build();
-  //   }
-  // }
+      return ResponseEntity.badRequest().build();
+    }
+  }
 }
