@@ -144,7 +144,7 @@ public class TRoom {
 
 
   @OneToMany(mappedBy = "userRoomRelationId.user", cascade = CascadeType.ALL)
-  private Set<TUserRoomRelation> userRoomRelations;
+  private Set<TUserRoom> userRoomRelations;
 
   // endregion relation
 

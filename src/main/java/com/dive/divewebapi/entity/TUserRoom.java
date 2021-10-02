@@ -29,7 +29,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="t_user_room_relation")
+@Table(name="t_user_room")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,7 +42,7 @@ import lombok.Setter;
 })
 // endregion common JPA annotations
 
-public class TUserRoomRelation {
+public class TUserRoom {
 
   private UserRoomRelationId userRoomRelationId = new UserRoomRelationId();
 
@@ -75,6 +75,35 @@ public class TUserRoomRelation {
   private LocalDateTime modifyTime;
 
   // endregion modify_time column---
+
+  // region verify column---
+  /**
+   * Relation verify.
+   */
+  @Column(nullable = false)
+  private Integer verify; //0= not verify, 1=verify
+
+  // endregion verify column---
+
+
+  //*Not use lombok getter/setter*
+@Transient
+public TUser getUser() {
+  return getUserRoomRelationId().getUser();
+}
+
+public void setUser(TUser user) {
+  getUserRoomRelationId().setUser(user);
+}
+
+@Transient
+public TRoom getRoom() {
+  return getUserRoomRelationId().getRoom();
+}
+
+public void setRoom(TRoom room) {
+  getUserRoomRelationId().setRoom(room);
+}
 
 
   // region before save method

@@ -231,7 +231,7 @@ public class TUser {
     private Set<TAlreadyRead> alreadyReads;
 
   @OneToMany(mappedBy = "userRoomRelationId.user", cascade = CascadeType.ALL)
-    private Set<TUserRoomRelation> userRoomRelations;
+    private Set<TUserRoom> userRoomRelations;
 
   @OneToMany(mappedBy = "userUserFollowId.follow", cascade = CascadeType.ALL)
     private Set<TFollow> follows;
