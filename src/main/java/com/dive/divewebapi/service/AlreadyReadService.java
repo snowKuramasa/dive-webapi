@@ -19,6 +19,4 @@ public interface AlreadyReadService {
 
   public TAlreadyRead save(TAlreadyRead favorite) throws AlreadyReadNotSaveException;
 
-  public TAlreadyRead delete(TAlreadyRead favorite);
-
 }

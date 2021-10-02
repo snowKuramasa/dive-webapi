@@ -83,14 +83,4 @@ UserServiceImpl userService;
    return alreadyReadRepository.save(alreadyRead);
   }
 
-  /**
-   *  delete
-   */
-  @Override
-  public TAlreadyRead delete(TAlreadyRead alreadyRead) {
-     alreadyReadRepository.delete(alreadyRead);
-     return alreadyRead;
-  };
-
-
 }
