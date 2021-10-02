@@ -40,7 +40,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 @RestController
-@RequestMapping("rest/favorites")
+@RequestMapping("rest/favorite")
 public class FavoriteController {
 
   @Autowired
@@ -54,7 +54,7 @@ public class FavoriteController {
 
 
 
-  @GetMapping("/favorite/message/users/{id}")
+  @GetMapping("/user/{id}")
   ResponseEntity<MessageResponseList> getFavoriteMessagesByUserId(@PathVariable String id) {
 
     Integer userId = Integer.parseInt(id);
@@ -73,6 +73,35 @@ public class FavoriteController {
       MessageResponseList messageResponseList = new MessageResponseList(messageEntityList);
 
       return ResponseEntity.ok(messageResponseList);
+
+    } catch (FavoriteNotFoundException e) {
+
+      e.setMessage("This favorite not found.");
+      System.err.println(e.getMessage());
+
+      return ResponseEntity.notFound().build();
+    }
+  }
+
+  @GetMapping("/message/{id}")
+  ResponseEntity<UserResponseList> getFavoriteUsersByMessageId(@PathVariable String id) {
+
+    Integer messageId = Integer.parseInt(id);
+
+    try {
+      //get TFavorite entity
+      List<TFavorite> favoriteEntityList = favoriteService.getByMessageId(messageId);
+
+      List<TUser> userEntityList = new ArrayList<TUser>();
+
+      //userIdで検索したfavoriteからTUserを取得
+      favoriteEntityList.forEach(favoriteEntity -> {
+        userEntityList.add(favoriteEntity.getUser());
+      });
+
+      UserResponseList userResponseList = new UserResponseList(userEntityList);
+
+      return ResponseEntity.ok(userResponseList);
 
     } catch (FavoriteNotFoundException e) {
 
@@ -104,8 +133,8 @@ public class FavoriteController {
 
       //Create path for saved users.
       //Expected "api/messages/{userId}"
-      URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri() //->Expected api/favorites
-                .path("/favorite/messages/{id}")                    //->Expected api/favorites/{userId}
+      URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri() //->Expected api/favorite
+                .path("/favorite/user/{id}")                    //->Expected api/favorite/{userId}
                 .buildAndExpand(favoriteResponse.getUserId())       //->Expected insert userId
                 .toUri();
 
