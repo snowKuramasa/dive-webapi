@@ -1,5 +1,6 @@
 package com.dive.divewebapi.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -131,7 +132,7 @@ public class TUser {
    * User creation date.
    */
   @Column(name = "create_time")
-  private Date createTime;
+  private LocalDateTime createTime;
 
   //#endregion create_time column---
 
@@ -146,7 +147,7 @@ public class TUser {
     // TODO:ログイン時に更新するような処理にする
     nullable = true
   )
-  private Date lastLoginTime;
+  private LocalDateTime lastLoginTime;
 
   //#endregion last_login_time column---
 
@@ -156,7 +157,7 @@ public class TUser {
    * User update date.
    */
   @Column(name = "modify_time")
-  private Date modifyTime;
+  private LocalDateTime modifyTime;
 
   //#endregion modify_time column---
 
@@ -298,15 +299,15 @@ public class TUser {
   @PrePersist
     public void onPrePersist() {
       setDeleted(0);
-      setCreateTime(new Date());
-      setModifyTime(new Date());
+      setCreateTime(LocalDateTime.now());
+      setModifyTime(LocalDateTime.now());
     }
   //#endregion before save method
 
   //#region before update method
   @PreUpdate
     public void onPreUpdate() {
-      setModifyTime(new Date());
+      setModifyTime(LocalDateTime.now());
     }
   //#endregion before update method
 
