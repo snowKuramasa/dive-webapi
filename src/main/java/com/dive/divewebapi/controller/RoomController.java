@@ -7,13 +7,16 @@ import java.util.Optional;
 import com.dive.divewebapi.entity.TImage;
 import com.dive.divewebapi.entity.TRoom;
 import com.dive.divewebapi.entity.TUser;
+import com.dive.divewebapi.entity.TUserRoom;
 import com.dive.divewebapi.exception.RoomNotSaveException;
 import com.dive.divewebapi.exception.UserNotFoundException;
+import com.dive.divewebapi.exception.UserRoomNotSaveException;
 import com.dive.divewebapi.requestBody.RoomRequest;
 import com.dive.divewebapi.response.RoomResponse;
 import com.dive.divewebapi.response.RoomResponseList;
 import com.dive.divewebapi.exception.RoomNotFoundException;
 import com.dive.divewebapi.service.RoomServiceImpl;
+import com.dive.divewebapi.service.UserRoomServiceImpl;
 import com.dive.divewebapi.service.RoomServiceImpl;
 import com.dive.divewebapi.service.UserServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -43,6 +46,9 @@ public class RoomController {
 
   @Autowired
   UserServiceImpl userService;
+
+  @Autowired
+  UserRoomServiceImpl userRoomService;
 
 
   @GetMapping
@@ -161,6 +167,26 @@ public class RoomController {
                                           // savedRoomEntity.getThumbnail(),
                                           savedRoomEntity
                                         );
+
+
+      //Create relation roomCreator
+      TUserRoom userRoomEntity = new TUserRoom();
+
+      TUser userRoomUserEntity = roomCreater;
+      TRoom userRoomRoomEntity = savedRoomEntity;
+
+      //set composite key
+      userRoomEntity.setUser(userRoomUserEntity);
+      userRoomEntity.setRoom(userRoomRoomEntity);
+      userRoomEntity.setVerify(1);
+
+      try {
+        userRoomService.save(userRoomEntity);
+      } catch (UserRoomNotSaveException e) {
+        e.setMessage("This userRoom could not saved.");
+        System.err.println(e.getMessage());
+        return ResponseEntity.badRequest().build();
+      }
 
       //Create path for saved rooms.
       //Expected "api/rooms/{roomI}"

@@ -1,5 +1,6 @@
 package com.dive.divewebapi.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.AssociationOverride;
@@ -61,7 +62,7 @@ public class TFavorite {
    * Created date.
    */
   @Column(nullable = false)
-   private Date createTime;
+   private LocalDateTime createTime;
 
   // endregion create_time column---
 
@@ -70,7 +71,7 @@ public class TFavorite {
    * Modify date.
    */
   @Column(nullable = false)
-    private Date modifyTime;
+    private LocalDateTime modifyTime;
 
   // endregion modify_time column---
 
@@ -100,15 +101,15 @@ public class TFavorite {
   // region before save method
   @PrePersist
     public void onPrePersist() {
-      setCreateTime(new Date());
-      setModifyTime(new Date());
+      setCreateTime(LocalDateTime.now());
+      setModifyTime(LocalDateTime.now());
     }
   // endregion before save method
 
   // region before update method
   @PreUpdate
     public void onPreUpdate() {
-      setModifyTime(new Date());
+      setModifyTime(LocalDateTime.now());
     }
   // endregion before update method
 }

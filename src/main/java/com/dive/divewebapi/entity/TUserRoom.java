@@ -1,5 +1,6 @@
 package com.dive.divewebapi.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.AssociationOverride;
@@ -28,7 +29,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name="t_user_room_relation")
+@Table(name="t_user_room")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,7 +42,7 @@ import lombok.Setter;
 })
 // endregion common JPA annotations
 
-public class TUserRoomRelation {
+public class TUserRoom {
 
   private UserRoomRelationId userRoomRelationId = new UserRoomRelationId();
 
@@ -62,7 +63,7 @@ public class TUserRoomRelation {
    * Created date.
    */
   @Column(nullable = false)
-  private Date createTime;
+  private LocalDateTime createTime;
 
   // endregion create_time column---
 
@@ -71,23 +72,52 @@ public class TUserRoomRelation {
    * Modify date.
    */
   @Column(nullable = false)
-  private Date modifyTime;
+  private LocalDateTime modifyTime;
 
   // endregion modify_time column---
+
+  // region verify column---
+  /**
+   * Relation verify.
+   */
+  @Column(nullable = false)
+  private Integer verify; //0= not verify, 1=verify
+
+  // endregion verify column---
+
+
+  //*Not use lombok getter/setter*
+@Transient
+public TUser getUser() {
+  return getUserRoomRelationId().getUser();
+}
+
+public void setUser(TUser user) {
+  getUserRoomRelationId().setUser(user);
+}
+
+@Transient
+public TRoom getRoom() {
+  return getUserRoomRelationId().getRoom();
+}
+
+public void setRoom(TRoom room) {
+  getUserRoomRelationId().setRoom(room);
+}
 
 
   // region before save method
   @PrePersist
     public void onPrePersist() {
-      setCreateTime(new Date());
-      setModifyTime(new Date());
+      setCreateTime(LocalDateTime.now());
+      setModifyTime(LocalDateTime.now());
     }
   // endregion before save method
 
   // region before update method
   @PreUpdate
     public void onPreUpdate() {
-      setModifyTime(new Date());
+      setModifyTime(LocalDateTime.now());
     }
   // endregion before update method
 }

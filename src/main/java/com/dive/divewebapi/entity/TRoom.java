@@ -1,6 +1,7 @@
 package com.dive.divewebapi.entity;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -109,7 +110,7 @@ public class TRoom {
     name = "create_time",
     nullable = false
   )
-  private Date createTime;
+  private LocalDateTime createTime;
 
   // endregion create_time column---
 
@@ -123,7 +124,7 @@ public class TRoom {
     name = "modify_time",
     nullable = false
   )
-  private Date modifyTime;
+  private LocalDateTime modifyTime;
 
   // endregion modify_time column---
 
@@ -143,7 +144,7 @@ public class TRoom {
 
 
   @OneToMany(mappedBy = "userRoomRelationId.user", cascade = CascadeType.ALL)
-  private Set<TUserRoomRelation> userRoomRelations;
+  private Set<TUserRoom> userRoomRelations;
 
   // endregion relation
 
@@ -190,15 +191,15 @@ public class TRoom {
   // region before save method
     @PrePersist
     public void onPrePersist() {
-      setCreateTime(new Date());
-      setModifyTime(new Date());
+      setCreateTime(LocalDateTime.now());
+      setModifyTime(LocalDateTime.now());
     }
   // endregion before save method
 
   // region before update method
   @PreUpdate
     public void onPreUpdate() {
-      setModifyTime(new Date());
+      setModifyTime(LocalDateTime.now());
     }
   // endregion before update method
 }

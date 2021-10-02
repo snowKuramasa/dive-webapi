@@ -1,6 +1,8 @@
 package com.dive.divewebapi.response;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Optional;
 
@@ -35,19 +37,17 @@ public class AlreadyReadResponse {
   /**alreadyRead createTime getter*/
   public String getCreateTime() { return this.createTime; }
   /**alreadyRead createTime setter*/
-  public void setCreateTime(Date createTime) {
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    String strDate = sdf.format(createTime);
-    this.createTime = strDate;
+  public void setCreateTime(LocalDateTime createTime) {
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    this.createTime = createTime.format(dateTimeFormatter);
   }
 
   /**alreadyRead modifyTime getter*/
   public String getModifyTime() { return this.modifyTime; }
   /**alreadyRead modifyTime setter*/
-  public void setModifyTime(Date modifyTime) {
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    String strDate = sdf.format(modifyTime);
-    this.modifyTime = strDate;
+  public void setModifyTime(LocalDateTime modifyTime) {
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    this.modifyTime = modifyTime.format(dateTimeFormatter);
   }
 
   //#endregion getter/setter

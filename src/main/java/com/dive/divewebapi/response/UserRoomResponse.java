@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Optional;
 
-import com.dive.divewebapi.entity.TFavorite;
-import com.dive.divewebapi.entity.TMessage;
+import com.dive.divewebapi.entity.TUserRoom;
+import com.dive.divewebapi.entity.TRoom;
 import com.dive.divewebapi.entity.TUser;
 import com.dive.divewebapi.exception.UserNotFoundException;
 import com.dive.divewebapi.service.UserServiceImpl;
@@ -19,32 +19,32 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FavoriteResponse {
+public class UserRoomResponse {
 
   private Integer userId;
 
-  private Integer messageId;
+  private Integer roomId;
 
 
-  //favorite modify time
+  //userRoom modify time
   private String modifyTime;
 
-  //favorite create time
+  //userRoom create time
   private String createTime;
 
   //#region getter/setter
 
-  /**favorite createTime getter*/
+  /**userRoom createTime getter*/
   public String getCreateTime() { return this.createTime; }
-  /**favorite createTime setter*/
+  /**userRoom createTime setter*/
   public void setCreateTime(LocalDateTime createTime) {
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     this.createTime = createTime.format(dateTimeFormatter);
   }
 
-  /**favorite modifyTime getter*/
+  /**userRoom modifyTime getter*/
   public String getModifyTime() { return this.modifyTime; }
-  /**favorite modifyTime setter*/
+  /**userRoom modifyTime setter*/
   public void setModifyTime(LocalDateTime modifyTime) {
     DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     this.modifyTime = modifyTime.format(dateTimeFormatter);
@@ -52,12 +52,12 @@ public class FavoriteResponse {
 
   //#endregion getter/setter
 
-  public FavoriteResponse(TFavorite favoriteEntity) {
+  public UserRoomResponse(TUserRoom userRoomEntity) {
     super();
-    setUserId    (favoriteEntity.getUser().getUserId());
-    setMessageId    (favoriteEntity.getMessage().getMessageId());
-    setModifyTime(favoriteEntity.getModifyTime());
-    setCreateTime(favoriteEntity.getCreateTime());
+    setUserId    (userRoomEntity.getUser().getUserId());
+    setRoomId    (userRoomEntity.getRoom().getRoomId());
+    setModifyTime(userRoomEntity.getModifyTime());
+    setCreateTime(userRoomEntity.getCreateTime());
   }
 
 }
