@@ -20,6 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -129,6 +132,8 @@ public class MessageController {
     }
   }
 
+  @MessageMapping("/users/{receiverUserId}") //クライアントからメッセージが宛先に送信された場合に、メソッドが呼び出されることを保証する。
+  @SendTo("/queue/users/{receiverUserId}") //個別にユーザーへ送信するための宛先
   @PostMapping
   ResponseEntity<MessageResponse> postMessage(@RequestBody MessageRequest message) throws UserNotFoundException {
 
@@ -143,6 +148,7 @@ public class MessageController {
       messageEntity.setMessage(message.getMessage());
       messageEntity.setSenderUser(senderUser);
       messageEntity.setReceiverUser(receiverUser);
+      //TODO:TMessageのbelong_to_room_idの処理も入れること（roomIdに指定があるときはチャット、無い時はDMとして保存する）
 
       TMessage savedMessageEntity = messageService.save(messageEntity);
 
@@ -154,7 +160,8 @@ public class MessageController {
 
       //Create path for saved messages.
       //Expected "api/messages/{messageId}"
-      URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri() //->Expected api/messages
+      URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequestUri() //->Expected api/messages
                 .path("/{id}")                                      //->Expected api/messages/{messageId}
                 .buildAndExpand(messageResponse.getMessageId())     //->Expected insert messageId
                 .toUri();
