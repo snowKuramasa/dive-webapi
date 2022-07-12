@@ -134,8 +134,26 @@ public class MessageController {
 
   @MessageMapping("/users/{receiverUserId}") //クライアントからメッセージが宛先に送信された場合に、メソッドが呼び出されることを保証する。
   @SendTo("/queue/users/{receiverUserId}") //個別にユーザーへ送信するための宛先
+  MessageResponse sendMessage(@RequestBody MessageRequest message) throws UserNotFoundException {
+
+    // MessageResponse responseEntity = this.postMessage(message);
+    MessageResponse messageResponse = this.postMessage(message);
+
+    // MessageResponse messageResponse = responseEntity.getBody();
+
+    // //メッセージが新規作成に成功した場合はメッセージを返す
+    // if(responseEntity.getStatusCode() != null && responseEntity.getStatusCode().value() == 201){
+    //   messageResponse = responseEntity.getBody();
+    // }else{
+    //   //メッセージを新規作成に失敗した場合は代わりのメッセージを返す
+    //   messageResponse.setMessage("送信に失敗しました。");
+    // }
+
+    return messageResponse;
+  }
+
   @PostMapping
-  ResponseEntity<MessageResponse> postMessage(@RequestBody MessageRequest message) throws UserNotFoundException {
+  MessageResponse postMessage(@RequestBody MessageRequest message) throws UserNotFoundException {
 
     try {
       //JPA Entity
@@ -160,20 +178,37 @@ public class MessageController {
 
       //Create path for saved messages.
       //Expected "api/messages/{messageId}"
-      URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequestUri() //->Expected api/messages
-                .path("/{id}")                                      //->Expected api/messages/{messageId}
-                .buildAndExpand(messageResponse.getMessageId())     //->Expected insert messageId
-                .toUri();
+      // URI uri = ServletUriComponentsBuilder
+      //           .fromCurrentRequestUri() //->Expected api/messages
+      //           .path("/{id}")                                      //->Expected api/messages/{messageId}
+      //           .buildAndExpand(messageResponse.getMessageId())     //->Expected insert messageId
+      //           .toUri();
 
-      return ResponseEntity.created(uri).body(messageResponse);
+      // return ResponseEntity.created(uri).body(messageResponse);
+      return messageResponse;
 
     } catch (MessageNotSaveException e) {
 
       e.setMessage("This message could not saved.");
       System.err.println(e.getMessage());
 
-      return ResponseEntity.badRequest().build();
+      // return ResponseEntity.badRequest().build();
+      //set request body
+      TUser senderUser = userService.getById(message.getSenderUserId()).get();
+      TUser receiverUser = userService.getById(message.getReceiverUserId()).get();
+
+      TMessage messageEntity = new TMessage();
+      messageEntity.setMessage("送信に失敗しました。");
+      messageEntity.setSenderUser(senderUser);
+      messageEntity.setReceiverUser(receiverUser);
+      //TODO:TMessageのbelong_to_room_idの処理も入れること（roomIdに指定があるときはチャット、無い時はDMとして保存する）
+
+      MessageResponse messageResponse = new MessageResponse(
+        senderUser,
+        receiverUser,
+        messageEntity
+      );
+      return messageResponse;
     }
   }
 
